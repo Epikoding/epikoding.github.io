@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/obsidian-sync-blog.md",
+                "file": "_posts/2025-01-10-obsidian-sync-blog.md.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "obsidian-sync-blog"
+              "title": "2025-01-10-obsidian-sync-blog.md"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/obsidian-sync-blog.md",
+                "file": "_posts/2025-01-10-obsidian-sync-blog.md.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for obsidian-sync-blog"
+              "title": "Backlinks for 2025-01-10-obsidian-sync-blog.md"
             }
           },
           {
@@ -183,7 +183,7 @@
   },
   "active": "97f76839bdabbd9b",
   "lastOpenFiles": [
-    "_posts/obsidian-sync-blog.md",
+    "_posts/2025-01-10-obsidian-sync-blog.md.md",
     "_posts/2025-01-08-hello-world.md.md",
     "_posts/Untitled.md",
     "_tabs/archives.md",
