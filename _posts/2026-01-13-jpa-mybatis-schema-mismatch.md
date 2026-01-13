@@ -1,6 +1,6 @@
 ---
 title: "JPA와 MyBatis의 차이: DB 스키마 불일치 처리 방식"
-date: 2026-01-13 20:00:00 +0900
+date: 2026-01-13 19:30:00 +0900
 categories: [개발, 백엔드]
 tags: [jpa, mybatis, database, troubleshooting]
 description: MyBatis에서 발생하는 DB 스키마 불일치 에러와 JPA와의 차이점, 해결 방법을 정리합니다.
