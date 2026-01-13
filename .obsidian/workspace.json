@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
+                "file": "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-01-13-jpa-mybatis-schema-mismatch"
+              "title": "2026-01-13-jpa-mybatis-schema-mismatch.md"
             }
           }
         ],
@@ -128,12 +128,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
+                "file": "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 2026-01-13-jpa-mybatis-schema-mismatch"
+              "title": "Outgoing links from 2026-01-13-jpa-mybatis-schema-mismatch.md"
             }
           },
           {
@@ -200,13 +200,16 @@
   },
   "active": "4f3dc0695137c879",
   "lastOpenFiles": [
-    "_posts/2025-01-10-obsidian-sync-blog.md.md",
     "_posts/2025-01-10-Mac을 더 편리하게 사용하기 위한 유틸리티 모음.md.md",
-    "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
+    "_posts/2025-01-10-obsidian-sync-blog.md.md",
+    "_tabs/about.md",
+    "_tabs/archives.md",
+    "_tabs/categories.md",
+    "_tabs/tags.md",
+    "README.md",
+    "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md.md",
     "_posts/2025-01-08-hello-world.md.md",
     "_posts/Untitled.md",
-    "_tabs/archives.md",
-    "_tabs/about.md",
     "_tabs/Untitled.md"
   ]
 }
