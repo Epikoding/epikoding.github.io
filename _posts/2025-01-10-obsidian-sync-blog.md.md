@@ -2,8 +2,8 @@
 title: "Mac + Android 환경에서 Obsidian 동기화하기: Maestral을 선택한 이유"
 date: 2025-01-10 14:00:00 +0900
 categories:
-  - 개발
   - 도구
+  - 동기화
 tags:
   - obsidian
   - maestral
