@@ -162,6 +162,160 @@ public String itemCreate(ItemForm form, RedirectAttributes ra) {
 
 ---
 
+## POST도 GlobalExceptionHandler에서 처리할 수 있을까?
+
+앞서 POST는 Controller에서 직접 처리해야 한다고 했지만, 방법이 아예 없는 건 아니다. 몇 가지 대안을 살펴보자.
+
+### 방법 1: HTTP Method 분기 처리
+
+`GlobalExceptionHandler`에서 HTTP 메서드를 확인하고 분기 처리할 수 있다.
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BusinessException.class)
+    public String handleBusinessException(
+            BusinessException e,
+            Model model,
+            HttpServletRequest req,
+            RedirectAttributes ra) {
+
+        // POST/PUT/DELETE면 redirect
+        if (!"GET".equalsIgnoreCase(req.getMethod())) {
+            ra.addFlashAttribute("error", e.getMessage());
+            return "redirect:" + req.getRequestURI();
+        }
+
+        // GET이면 템플릿 직접 렌더링
+        model.addAttribute("error", e.getMessage());
+        return extractViewPath(req.getRequestURI());
+    }
+}
+```
+
+> 단점: redirect 경로가 항상 현재 URI가 맞는지 보장할 수 없다. 예를 들어, 등록 후 목록으로 가야 하는 경우에는 적합하지 않다.
+{: .prompt-warning }
+
+### 방법 2: AJAX 방식으로 변경 (추천)
+
+POST를 폼 제출 대신 **AJAX**로 처리하면 `GlobalExceptionHandler`에서 JSON 응답으로 통일할 수 있다.
+
+```mermaid
+sequenceDiagram
+    participant Browser as 브라우저
+    participant Controller as Controller
+    participant Service as Service
+    participant Handler as GlobalExceptionHandler
+
+    Browser->>Controller: POST /admin/items (AJAX)
+    Note over Browser: fetch() / axios
+    Controller->>Service: createItem()
+    Service-->>Controller: BusinessException 발생!
+    Controller-->>Handler: 예외 전파
+
+    Handler-->>Browser: JSON {"error": "에러 메시지"}
+
+    Note over Browser: 페이지 새로고침 없이<br/>모달/토스트로 에러 표시 ✅
+```
+
+**GlobalExceptionHandler 구현:**
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> handleBusinessException(BusinessException e) {
+        return ResponseEntity.badRequest()
+            .body(Map.of("error", e.getMessage()));
+    }
+}
+```
+
+**프론트엔드 구현:**
+
+```javascript
+fetch('/admin/items', {
+    method: 'POST',
+    body: formData
+})
+.then(res => res.json())
+.then(data => {
+    if (data.error) {
+        showErrorMessage(data.error);  // 모달이나 토스트로 표시
+    } else {
+        location.reload();  // 성공 시 새로고침
+    }
+});
+```
+
+> AJAX 방식의 장점:
+> - 페이지 새로고침 없이 에러 표시
+> - 예외 처리 로직 일원화
+> - UX 향상 (모달 안에서 에러 표시 가능)
+{: .prompt-tip }
+
+### 방법 3: Custom Annotation으로 redirect 경로 지정
+
+어노테이션을 만들어서 각 Controller 메서드에 에러 시 redirect할 경로를 지정할 수 있다.
+
+**어노테이션 정의:**
+
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface OnErrorRedirect {
+    String value();  // redirect 경로
+}
+```
+
+**Controller에서 사용:**
+
+```java
+@PostMapping("")
+@OnErrorRedirect("/admin/items")  // 에러 시 이 경로로 redirect
+public String itemCreate(ItemForm form) {
+    itemService.createItem(form);
+    return "redirect:";
+}
+```
+
+**GlobalExceptionHandler에서 어노테이션 읽기:**
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BusinessException.class)
+    public String handleBusinessException(
+            BusinessException e,
+            HandlerMethod handlerMethod,
+            RedirectAttributes ra) {
+
+        OnErrorRedirect annotation = handlerMethod.getMethodAnnotation(OnErrorRedirect.class);
+        if (annotation != null) {
+            ra.addFlashAttribute("error", e.getMessage());
+            return "redirect:" + annotation.value();
+        }
+
+        // 어노테이션 없으면 기본 처리
+        throw e;
+    }
+}
+```
+
+### 어떤 방법을 선택할까?
+
+| 방법 | 적합한 상황 |
+|------|------------|
+| 방법 1 (Method 분기) | 빠르게 적용하고 싶을 때 |
+| **방법 2 (AJAX)** | 신규 프로젝트, UX가 중요할 때 **(추천)** |
+| 방법 3 (Annotation) | 기존 SSR 유지하면서 일원화하고 싶을 때 |
+
+---
+
 ## 정리
 
 | 구분 | GET 요청 | POST/PUT/DELETE 요청 |
