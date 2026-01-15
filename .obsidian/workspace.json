@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 502.5
+    "width": 374.5
   },
   "right": {
     "id": "440e1af02f29a7b9",
@@ -185,6 +185,11 @@
   },
   "active": "4be0381d2f7cb77e",
   "lastOpenFiles": [
+    "assets/js/custom/mermaid-theme.js",
+    "assets/js/custom",
+    "assets/js",
+    "_includes/js-selector.html",
+    "_includes",
     "assets/css/jekyll-theme-chirpy.scss",
     "_sass/addon/mermaid.scss",
     "assets/css",
