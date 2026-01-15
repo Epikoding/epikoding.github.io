@@ -88,6 +88,7 @@
 {% if page.mermaid %}
 <!-- Custom Mermaid Theme Override -->
 <script>
+{% raw %}
 document.addEventListener('DOMContentLoaded', function() {
   // 색상 문자열을 RGB로 파싱
   function parseColor(color) {
@@ -198,5 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, 100);
 });
+{% endraw %}
 </script>
 {% endif %}
