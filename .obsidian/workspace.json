@@ -185,6 +185,11 @@
   },
   "active": "4be0381d2f7cb77e",
   "lastOpenFiles": [
+    "assets/css/jekyll-theme-chirpy.scss",
+    "_sass/addon/mermaid.scss",
+    "assets/css",
+    "_sass/addon",
+    "_sass",
     "_posts/2026-01-15-spring-validation-groups.md",
     "_posts/2026-01-15-thymeleaf-modal-separation-limitations.md",
     "_posts/2025-01-10-obsidian-sync-blog.md.md",
