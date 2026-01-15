@@ -201,6 +201,7 @@ Thymeleaf의 레이아웃 시스템은 빈 칸이 있는 문서 양식과 비슷
 ```
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 flowchart TB
     subgraph body["최종 렌더링된 HTML"]
         nav["nav: 메뉴바"]

@@ -20,6 +20,7 @@ Spring Boot + Thymeleaf 기반의 SSR(Server-Side Rendering) 어드민 페이지
 GET 요청에서 예외가 발생하면 `GlobalExceptionHandler`가 동일한 템플릿을 다시 렌더링하는 방식으로 처리할 수 있다.
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Controller as Controller
@@ -51,6 +52,7 @@ sequenceDiagram
 POST 요청에서 예외가 발생하면 같은 방식으로 처리할 수 없다.
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Controller as Controller
@@ -113,6 +115,7 @@ public String itemCreate(ItemForm form) {
 POST 요청의 예외는 Controller에서 try-catch로 직접 처리하고 redirect해야 한다.
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Controller as Controller
@@ -202,6 +205,7 @@ public class GlobalExceptionHandler {
 POST를 폼 제출 대신 **AJAX**로 처리하면 `GlobalExceptionHandler`에서 JSON 응답으로 통일할 수 있다.
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Controller as Controller
@@ -360,6 +364,7 @@ return "redirect";       // ❌ "redirect"라는 이름의 템플릿 파일을 �
 **1) POST 처리 후 → Redirect (PRG 패턴)**
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Server as 서버
@@ -375,6 +380,7 @@ sequenceDiagram
 **2) 에러 페이지 표시 → Forward (URL 유지)**
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Controller as Controller
@@ -391,6 +397,7 @@ sequenceDiagram
 **3) 로그인 후 원래 페이지로 → Redirect (URL 변경)**
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Server as 서버
@@ -417,6 +424,7 @@ Redirect는 새 요청이라 Model 데이터가 사라지는 문제가 있다. F
 **1) addFlashAttribute - 세션에 임시 저장 (URL에 안 보임)**
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Server as 서버
@@ -439,6 +447,7 @@ sequenceDiagram
 **2) addAttribute - URL 파라미터로 전달 (URL에 보임)**
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant Browser as 브라우저
     participant Server as 서버
