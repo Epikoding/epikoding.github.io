@@ -221,10 +221,10 @@ flowchart TB
         end
     end
 
-    style script1 fill:#ffcccc
-    style warning fill:#ffcccc
-    style script2 fill:#ccffcc
-    style correct fill:#ccffcc
+    style script1 fill:#ffcccc,color:#1a1a1a
+    style warning fill:#ffcccc,color:#1a1a1a
+    style script2 fill:#ccffcc,color:#1a1a1a
+    style correct fill:#ccffcc,color:#1a1a1a
 ```
 
 ### 3-3. 발생하는 문제점
