@@ -150,7 +150,6 @@ public ResponseEntity<?> create(@Validated(Create.class) BlockWordForm form) { .
 어노테이션은 **메타데이터**일 뿐입니다. 그 자체로는 아무 동작도 하지 않습니다. 실제 검증은 `Validator`가 수행합니다.
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%
 sequenceDiagram
     participant C as Controller
     participant R as MethodArgumentResolver
