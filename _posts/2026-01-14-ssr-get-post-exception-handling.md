@@ -156,9 +156,9 @@ public String itemCreate(ItemForm form, RedirectAttributes ra) {
 
 ### Controller 레벨 예외 처리가 필요한 이유
 
-1. **Redirect 대상 지정**: Controller만 어느 화면으로 redirect할지 알 수 있음
-2. **Flash Attribute 사용**: redirect 후에도 에러 메시지 전달 가능
-3. **PRG 패턴 준수**: POST → Redirect → GET으로 새로고침 시 중복 제출 방지
+1. Redirect 대상 지정: Controller만 어느 화면으로 redirect할지 알 수 있음
+2. Flash Attribute 사용: redirect 후에도 에러 메시지 전달 가능
+3. PRG 패턴 준수: POST → Redirect → GET으로 새로고침 시 중복 제출 방지
 
 ---
 
