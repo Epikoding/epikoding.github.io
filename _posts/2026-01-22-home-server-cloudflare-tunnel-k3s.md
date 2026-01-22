@@ -1,9 +1,18 @@
 ---
 title: 집에 서버 구축하고 Cloudflare Tunnel로 외부 공개하기
 date: 2026-01-22 00:00:00 +0900
-categories: [인프라, Kubernetes]
-tags: [cloudflare, tunnel, k3s, traefik, dns, ubuntu, home-server]
-description: 미니PC에 Ubuntu와 K3s를 설치하고 Cloudflare Tunnel로 포트 개방 없이 외부에 안전하게 공개하는 전체 과정을 정리한다. DNS 개념부터 트러블슈팅까지 포함.
+categories:
+  - 인프라
+  - Kubernetes
+tags:
+  - cloudflare
+  - tunnel
+  - k3s
+  - traefik
+  - dns
+  - ubuntu
+  - home-server
+description: 미니PC에 Ubuntu와 K3s를 설치하고 Cloudflare Tunnel로 포트 개방 없이 외부에 안전하게 공개하는 전체 과정을 정리한다.
 mermaid: true
 ---
 
@@ -430,7 +439,7 @@ ID                                   NAME        CREATED
 ### 4.2 설정 파일 작성
 
 ```bash
-nano ~/.cloudflared/config.yml
+vi ~/.cloudflared/config.yml
 ```
 
 다음 내용을 입력한다. **터널 ID와 사용자명은 본인 것으로 교체**해야 한다.
@@ -565,7 +574,7 @@ sudo cp ~/.cloudflared/<your-tunnel-id>.json /etc/cloudflared/
 시스템 경로로 복사했으니 `credentials-file` 경로도 수정해야 한다.
 
 ```bash
-sudo nano /etc/cloudflared/config.yml
+sudo vi /etc/cloudflared/config.yml
 ```
 
 ```yaml
@@ -815,7 +824,7 @@ cloudflared tunnel route dns my-tunnel www.myproject.dev
 **3. config.yml 수정**
 
 ```bash
-sudo nano /etc/cloudflared/config.yml
+sudo vi /etc/cloudflared/config.yml
 ```
 
 ```yaml
