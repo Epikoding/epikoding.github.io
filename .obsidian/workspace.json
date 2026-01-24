@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-01-19-hidden-container-ui-rendering-issue.md",
+                "file": "_posts/2026-01-25-claude-code-command-agent-separation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-01-19-hidden-container-ui-rendering-issue"
+              "title": "2026-01-25-claude-code-command-agent-separation"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2026-01-19-hidden-container-ui-rendering-issue.md",
+                "file": "_posts/2026-01-25-claude-code-command-agent-separation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 2026-01-19-hidden-container-ui-rendering-issue"
+              "title": "Backlinks for 2026-01-25-claude-code-command-agent-separation"
             }
           },
           {
@@ -185,8 +185,8 @@
   },
   "active": "4be0381d2f7cb77e",
   "lastOpenFiles": [
-    "_posts/2026-01-22-home-server-cloudflare-tunnel-k3s.md",
     "_posts/2026-01-19-hidden-container-ui-rendering-issue.md",
+    "_posts/2026-01-22-home-server-cloudflare-tunnel-k3s.md",
     "_posts/2026-01-15-thymeleaf-modal-separation-limitations.md",
     "_posts/2026-01-15-spring-validation-groups.md",
     "_posts/2026-01-14-ssr-get-post-exception-handling.md",
