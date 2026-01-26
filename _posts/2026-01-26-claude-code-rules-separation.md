@@ -41,8 +41,9 @@ Claude Code를 사용하면서 개인 코딩 규칙을 `CLAUDE.md`에 정리해�
 ### rules로 분리하면
 
 ```mermaid
-flowchart TB
-    subgraph Before["분리 전"]
+flowchart LR
+    subgraph Left["분리 전"]
+        direction TB
         A["CLAUDE.md (300줄+)"]
         A --> B1["Git 규칙"]
         A --> B2["Java 규칙"]
@@ -51,17 +52,27 @@ flowchart TB
         A --> B5["..."]
     end
 
-    subgraph After["분리 후"]
+    subgraph Right["분리 후"]
+        direction TB
         C["CLAUDE.md (간략한 개요)"]
-        D["rules/"]
+        D["rules/ (디렉토리)"]
+        
+        C --> D
+        
         D --> E1["git-workflow.md"]
         D --> E2["java-coding.md"]
         D --> E3["code-review.md"]
         D --> E4["testing.md"]
     end
 
-    style Before fill:#fff3cd,stroke:#ffc107,color:#1a1a1a
-    style After fill:#d4edda,stroke:#28a745,color:#1a1a1a
+    %% 연결 관계 (선택 사항: 흐름을 보여주기 위함)
+    Left -.->|"리팩토링"| Right
+
+    %% 스타일 설정
+    style Left fill:#fff3cd,stroke:#ffc107,color:#1a1a1a
+    style Right fill:#d4edda,stroke:#28a745,color:#1a1a1a
+    style C font-weight:bold
+    style D fill:#f8f9fa,stroke:#6c757d
 ```
 
 - 각 규칙 파일이 독립적으로 관리됨
