@@ -9,19 +9,19 @@ mermaid: true
 
 Claude Code에서 `/commit`, `/review` 같은 슬래시 명령어를 만들어 쓰다 보면 `commands/` 폴더에 `.md` 파일을 넣는 방식에 익숙해진다. 그런데 공식 문서를 다시 확인해보니 이런 문장이 있었다.
 
-> "Custom slash commands have been merged into skills."
-> — [Claude Code 공식 문서](https://code.claude.com/docs/en/slash-commands)
+> "Claude Code의 이전 버전에서는 슬래시 명령어 호출이 별도의 `SlashCommand` 도구에서 제공되었습니다. 이는 `Skill` 도구로 병합되었습니다."
+> — [Claude Code 공식 문서](https://code.claude.com/docs/ko/slash-commands)
 
-Command가 Skill로 통합되었다고 한다. 그래서 Skill이 뭔지, 왜 권장되는지 공식 문서를 기반으로 정리해봤다.
+SlashCommand 도구가 Skill 도구로 병합되었다고 한다. 그래서 Skill이 뭔지, 왜 권장되는지 공식 문서를 기반으로 정리해봤다.
 
 ---
 
 ## Skill이란?
 
-> "Skills are folders of instructions, scripts, and resources that Claude can dynamically load."
+> "Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks."
 > — [Anthropic Skills Repository](https://github.com/anthropics/skills)
 
-Skill은 Claude가 **동적으로 로드하는 지침, 스크립트, 리소스의 폴더**다. 단순히 프롬프트를 확장하는 것을 넘어서, 필요한 스크립트와 참고 자료까지 포함할 수 있는 패키지 형태다.
+Skill은 Claude가 **특화된 작업의 성능을 향상시키기 위해 동적으로 로드하는 지침, 스크립트, 리소스의 폴더**다. 단순히 프롬프트를 확장하는 것을 넘어서, 필요한 스크립트와 참고 자료까지 포함할 수 있는 패키지 형태다.
 
 ### Skill로 할 수 있는 것들
 
@@ -38,7 +38,8 @@ Anthropic이 공식 제공하는 [Skills Repository](https://github.com/anthropi
 
 공식 문서의 정확한 표현은 이렇다.
 
-> "A file at `.claude/commands/review.md` and a skill at `.claude/skills/review/SKILL.md` both create `/review` and work the same way."
+> "`.claude/commands/review.md`의 파일과 `.claude/skills/review/SKILL.md`의 기술 모두 `/review`를 생성하고 동일한 방식으로 작동합니다."
+> — [Claude Code 공식 문서](https://code.claude.com/docs/ko/skills)
 
 **둘 다 `/review`를 만들고 동일하게 작동한다.** 기존 Command 파일은 계속 작동하지만, 새로 만든다면 Skill이 권장된다.
 
@@ -360,4 +361,5 @@ export SLASH_COMMAND_TOOL_CHAR_BUDGET=20000
 
 - [Agent Skills Specification](https://agentskills.io/specification) - 공식 스펙
 - [Anthropic Skills Repository](https://github.com/anthropics/skills) - 공식 Skill 예제
-- [Claude Code Slash Commands](https://code.claude.com/docs/en/slash-commands) - Claude Code 문서
+- [Claude Code 슬래시 명령어](https://code.claude.com/docs/ko/slash-commands) - Claude Code 슬래시 명령어 문서
+- [Claude Code 기술](https://code.claude.com/docs/ko/skills) - Claude Code Skills 문서
