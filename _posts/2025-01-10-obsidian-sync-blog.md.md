@@ -110,3 +110,60 @@ Google Drive는 한글 파일명 처리에 문제가 있어서 권장하지 않�
 Mac에는 Maestral을, Android에는 Dropsync를 설치하면 안정적으로 동기화할 수 있다.
 
 참고로 Maestral은 스마트 동기화(온라인 전용)를 지원하지 않아서 모든 파일을 로컬에 다운로드한다. 텍스트 중심의 Obsidian 사용자라면 문제없지만, 대용량 파일을 다룬다면 고려해야 할 부분이다.
+
+---
+
+## 2025-02-04 추가: 심볼릭 링크 업로드 불가 문제
+
+Maestral을 사용하다가 새로운 문제를 만났다.
+
+### 문제 상황
+
+```
+Cannot upload sym link: Symlinks are not currently supported by the public Dropbox API.
+```
+
+Node.js 프로젝트의 `node_modules/.bin/` 폴더에서 이 에러가 발생했다. 이 폴더에는 npm이 자동으로 생성하는 심볼릭 링크들이 있다.
+
+```bash
+$ ls -la node_modules/.bin/
+lrwxr-xr-x  next -> ../next/dist/bin/next
+lrwxr-xr-x  tsc -> ../typescript/bin/tsc
+...
+```
+
+### 원인
+
+[Dropbox 공개 API는 **심볼릭 링크 생성을 지원하지 않는다**](https://maestral.app/docs/symlinks). 공식 Dropbox 앱은 내부 API를 사용해서 심볼릭 링크를 업로드할 수 있지만, Maestral은 공개 API만 사용 가능하다.
+
+| 클라이언트 | API 종류 | 심볼릭 링크 업로드 |
+|-----------|---------|-----------------|
+| Dropbox 공식 앱 | 내부 API | 가능 |
+| Maestral | 공개 API | 불가능 |
+
+이건 Maestral의 버그가 아니라 Dropbox 공개 API의 근본적인 제한이다.
+
+### 해결책: node_modules 동기화 제외
+
+`node_modules`는 애초에 동기화할 필요가 없다. `package.json`만 있으면 `npm install`로 언제든 재생성할 수 있다.
+
+Maestral CLI로 제외 설정을 추가했다.
+
+```bash
+# node_modules 제외
+maestral excluded add "dev/프로젝트명/frontend/node_modules"
+
+# 제외 목록 확인
+maestral excluded list
+```
+
+여러 프로젝트의 `node_modules`를 일괄 제외하려면 다음 스크립트를 사용할 수 있다.
+
+```bash
+find ~/Dropbox\ \(Maestral\)/dev -type d -name "node_modules" | while read dir; do
+  relative_path="${dir#$HOME/Dropbox (Maestral)/}"
+  maestral excluded add "$relative_path"
+done
+```
+
+이후 에러가 사라졌다. `node_modules`처럼 자동 생성되는 폴더는 동기화에서 제외하는 게 Best Practice다.
