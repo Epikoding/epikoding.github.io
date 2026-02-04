@@ -74,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -184,7 +183,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c5e28beb51594a61",
+  "active": "f5e3c1abe87c9dc4",
   "lastOpenFiles": [
     "_posts/2026-01-27-claude-code-skills-guide.md",
     "_posts/2026-02-03-prometheus-alertmanager-troubleshooting.md",
