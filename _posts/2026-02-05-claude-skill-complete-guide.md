@@ -1,5 +1,5 @@
 ---
-title: "[AI] Claude Skill 제작 완벽 가이드 - 공식 문서 핵심 정리"
+title: Claude Skill 제작 완벽 가이드 - 공식 문서 핵심 정리
 date: 2026-02-05 10:00:00 +0900
 categories:
   - 도구
