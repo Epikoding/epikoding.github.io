@@ -443,8 +443,8 @@ Skill이 느리거나 응답 품질이 저하되면:
 2. 상세 문서는 `references/`로 이동
 3. 동시에 20-50개 이상의 Skill이 활성화되어 있다면 선택적 활성화 권장
 
-### 참고 자료 (p.29)
+---
 
-- [Claude를 위한 스킬 제작 완벽 가이드 (PDF)](https://www.anthropic.com) - Anthropic 공식 가이드
-- [GitHub: anthropics/skills](https://github.com/anthropics/skills) - 공식 스킬 예제 저장소
-- [MCP 문서](https://modelcontextprotocol.io) - Model Context Protocol 문서
+Anthropic에서 공개한 공식 가이드 문서의 핵심 내용을 정리해봤습니다. Skill은 Claude를 나만의 워크플로우에 맞게 커스터마이징할 수 있는 강력한 방법입니다. 특히 MCP와 함께 사용하면 도구 접근과 워크플로우 지식을 결합하여 더욱 일관되고 효율적인 작업이 가능해집니다.
+
+처음 Skill을 만들 때는 `skill-creator`를 활용해보시고, 하나의 까다로운 작업을 반복 테스트하면서 성공한 접근 방식을 Skill로 추출하는 방법을 추천드립니다. 15-30분이면 첫 번째 작동하는 Skill을 만들 수 있으니, 직접 시도해보시길 바랍니다.
