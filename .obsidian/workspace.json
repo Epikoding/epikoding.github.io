@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-02-05-claude-skill-complete-guide.md",
+                "file": "_posts/2026-02-06-claude-code-activity-monitor-swiftbar.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-02-05-claude-skill-complete-guide"
+              "title": "2026-02-06-claude-code-activity-monitor-swiftbar"
             }
           }
         ]
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2026-02-05-claude-skill-complete-guide.md",
+                "file": "_posts/2026-02-06-claude-code-activity-monitor-swiftbar.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 2026-02-05-claude-skill-complete-guide"
+              "title": "Outline of 2026-02-06-claude-code-activity-monitor-swiftbar"
             }
           }
         ],
@@ -186,8 +186,8 @@
   },
   "active": "c5e28beb51594a61",
   "lastOpenFiles": [
-    "_posts/2026-01-27-claude-code-skills-guide.md",
     "_posts/2026-02-05-claude-skill-complete-guide.md",
+    "_posts/2026-01-27-claude-code-skills-guide.md",
     "_posts/2026-01-26-claude-code-rules-separation.md",
     "_posts/2026-02-03-prometheus-alertmanager-troubleshooting.md",
     "_posts/2025-01-10-obsidian-sync-blog.md.md",
