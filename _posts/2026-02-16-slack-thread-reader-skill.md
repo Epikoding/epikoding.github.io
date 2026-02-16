@@ -18,7 +18,7 @@ Claude Code로 작업하다 보면 Slack 대화의 맥락이 필요한 경우가
 
 특히 수십 개의 reply가 달린 쓰레드를 통째로 옮기는 경우, 단순 복사로는 발신자 정보나 이모지 리액션 같은 맥락이 유실되기 쉽습니다.
 
-**Slack Thread Reader**는 이 문제를 해결하기 위해 만든 Claude Code 스킬입니다. Slack 링크 하나만 넘기면 채널 히스토리와 쓰레드 reply를 자동으로 가져와 Claude Code가 읽을 수 있는 형태로 출력합니다.
+**Slack Thread Reader**는 이 문제를 해결하기 위해 만든 Claude Code 스킬입니다. openclaw을 Slack으로 사용하면서, Slack 대화를 Claude Code에서도 바로 읽을 수 있으면 좋겠다는 생각에서 시작했습니다. Slack 링크 하나만 넘기면 채널 히스토리와 쓰레드 reply를 자동으로 가져와 Claude Code가 읽을 수 있는 형태로 출력합니다.
 
 ```mermaid
 flowchart LR
