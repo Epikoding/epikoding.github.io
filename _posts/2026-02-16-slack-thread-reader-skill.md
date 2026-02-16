@@ -1,6 +1,6 @@
 ---
 title: Slack Thread Reader - Claude Code에서 Slack 대화를 가져오는 스킬 가이드
-date: 2026-02-16 16:00:00 +0900
+date: 2026-02-16 12:00:00 +0900
 categories:
   - 도구
   - Claude Code
