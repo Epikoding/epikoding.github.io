@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-02-16-slack-thread-reader-skill.md",
+                "file": "_posts/2026-02-19-karabiner-finder-path-copy.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-02-16-slack-thread-reader-skill"
+              "title": "2026-02-19-karabiner-finder-path-copy"
             }
           }
         ],
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2026-02-16-slack-thread-reader-skill.md",
+                "file": "_posts/2026-02-19-karabiner-finder-path-copy.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 2026-02-16-slack-thread-reader-skill"
+              "title": "Outline of 2026-02-19-karabiner-finder-path-copy"
             }
           }
         ],
@@ -201,8 +201,8 @@
   },
   "active": "117fafb83ff93804",
   "lastOpenFiles": [
-    "_posts/2026-02-16-slack-thread-reader-skill-v2.md",
     "_posts/2026-02-16-slack-thread-reader-skill.md",
+    "_posts/2026-02-16-slack-thread-reader-skill-v2.md",
     "_posts/2026-02-05-claude-skill-complete-guide.md",
     "_posts/2026-01-27-claude-code-skills-guide.md",
     "_posts/2026-01-26-claude-code-rules-separation.md",
