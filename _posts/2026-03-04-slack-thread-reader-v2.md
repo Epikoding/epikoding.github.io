@@ -1,5 +1,5 @@
 ---
-title: "Slack Thread Reader v2 - 채널/쓰레드/답글을 구분하고 LLM에 최적화된 출력까지"
+title: Slack Thread Reader v2 - 채널/쓰레드/답글을 구분하고 LLM에 최적화된 출력까지
 date: 2026-03-04 15:30:00 +0900
 categories:
   - 도구
@@ -13,9 +13,10 @@ tags:
   - llm
 description: Slack 링크 하나로 채널, 쓰레드, 답글을 자동 구분하여 가져오는 Claude Code 스킬. 답글 링크 파싱 버그 수정부터 LLM 토큰 최적화까지, 실제 사용하면서 개선한 과정을 정리합니다.
 mermaid: true
+팅:
 ---
 
-[이전 포스팅](/posts/slack-thread-reader-skill/)에서 Slack Thread Reader 스킬을 소개한 적이 있습니다. Slack 링크를 Claude Code에 넘기면 대화를 가져와 요약하는 도구였는데요, 실제로 업무에 사용하다 보니 몇 가지 문제가 드러났습니다.
+[이전 포스팅](https://epikoding.github.io/posts/slack-thread-reader-skill/)에서 Slack Thread Reader 스킬을 소개한 적이 있습니다. Slack 링크를 Claude Code에 넘기면 대화를 가져와 요약하는 도구였는데요, 실제로 업무에 사용하다 보니 몇 가지 문제가 드러났습니다.
 
 쓰레드 안의 답글 링크를 복사해서 넘기면 엉뚱한 결과가 나오는 버그가 있었고, 어떤 채널인지 ID만 보여서 헷갈렸으며, 출력 형식도 LLM이 읽기에 최적화되어 있지 않았습니다. 이번에 이런 문제들을 하나씩 짚어보면서 스크립트를 대폭 개선했습니다.
 

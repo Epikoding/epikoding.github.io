@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2026-02-05-claude-skill-complete-guide.md",
+                "file": "_posts/2026-03-04-slack-thread-reader-v2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 2026-02-05-claude-skill-complete-guide"
+              "title": "Backlinks for 2026-03-04-slack-thread-reader-v2"
             }
           },
           {
@@ -164,13 +164,25 @@
               "icon": "lucide-list",
               "title": "Outline of 2026-03-04-slack-thread-reader-v2"
             }
+          },
+          {
+            "id": "4930237d5ac72559",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "_posts/2026-03-04-slack-thread-reader-v2.md"
+              },
+              "icon": "lucide-info",
+              "title": "File properties for 2026-03-04-slack-thread-reader-v2"
+            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -184,10 +196,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f5e3c1abe87c9dc4",
+  "active": "c5e28beb51594a61",
   "lastOpenFiles": [
-    "_posts/2026-02-16-slack-thread-reader-skill.md",
+    "posts/slack-thread-reader-skill 1.md",
     "_posts/2026-03-04-slack-thread-reader-v2.md",
+    "posts/slack-thread-reader-skill.md",
+    "posts",
+    "_posts/2026-02-16-slack-thread-reader-skill.md",
     "_posts/2026-02-19-karabiner-finder-path-copy.md",
     "_posts/2026-02-05-claude-skill-complete-guide.md",
     "_posts/2026-02-06-claude-code-activity-monitor-swiftbar.md",
@@ -217,10 +232,7 @@
     "_sass/addon/mermaid.scss",
     "assets/css",
     "_sass/addon",
-    "_sass",
     "_posts/2026-01-14-ssr-get-post-exception-handling-mangkyu-style.md",
-    "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md.md",
-    "_tabs/about.md",
-    "_tabs/archives.md"
+    "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md.md"
   ]
 }
