@@ -152,7 +152,7 @@ openclaw을 Slack으로 사용하고 있다면 Bot Token이 이미 설정되어 
 
 clawhub에 공개되어 있습니다.
 
-> [Slack Thread Reader - clawhub.ai](https://clawhub.ai/Epikoding/slack-thread-reader)
+> https://clawhub.ai/Epikoding/slack-reader
 {: .prompt-info }
 
 ### 참고 자료

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "15d93f47baf52ac2",
+        "id": "e4baf81b86228525",
         "type": "tabs",
         "children": [
           {
-            "id": "c5e28beb51594a61",
+            "id": "b6ebcd34e45c5db2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -94,7 +94,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2026-03-04-slack-thread-reader-v2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 2026-03-04-slack-thread-reader-v2"
+              "title": "Backlinks"
             }
           },
           {
@@ -156,13 +155,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2026-03-04-slack-thread-reader-v2.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 2026-03-04-slack-thread-reader-v2"
+              "title": "Outline"
             }
           },
           {
@@ -170,11 +168,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "_posts/2026-03-04-slack-thread-reader-v2.md"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "File properties for 2026-03-04-slack-thread-reader-v2"
+              "title": "File properties"
             }
           }
         ]
@@ -196,13 +192,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c5e28beb51594a61",
+  "active": "b6ebcd34e45c5db2",
   "lastOpenFiles": [
-    "posts/slack-thread-reader-skill 1.md",
+    "_posts/2026-02-16-slack-thread-reader-skill.md",
     "_posts/2026-03-04-slack-thread-reader-v2.md",
+    "posts/slack-thread-reader-skill 1.md",
     "posts/slack-thread-reader-skill.md",
     "posts",
-    "_posts/2026-02-16-slack-thread-reader-skill.md",
     "_posts/2026-02-19-karabiner-finder-path-copy.md",
     "_posts/2026-02-05-claude-skill-complete-guide.md",
     "_posts/2026-02-06-claude-code-activity-monitor-swiftbar.md",
