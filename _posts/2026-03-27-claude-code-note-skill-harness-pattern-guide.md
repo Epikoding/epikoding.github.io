@@ -7,7 +7,15 @@ description: 하네스 패턴(Generator/Evaluator 분리)의 개념과, Claude C
 mermaid: true
 ---
 
-Claude Code의 스킬(Skill)은 반복 작업을 자동화하는 강력한 도구지만, 단일 패스 방식으로 구현하면 품질이 들쭉날쭉해지는 문제가 있다. 생성과 검증이 하나의 흐름 안에서 동시에 일어나면 어느 쪽도 제대로 하기 어렵기 때문이다. 이 글에서는 그 해법으로 하네스 패턴(Harness Pattern)을 세 스킬에 적용한 과정을 정리하면서, `note` 스킬의 리팩터링과 59개 문서 실험, `tech-blog-transformer` 스킬의 4축 채점 기준과 Consistency Checker 사전 필터, 그리고 `vault-sync` 스킬의 5레이어 아키텍처와 4버전에 걸친 진화 과정까지 함께 살펴본다.
+Claude Code의 스킬(Skill)은 반복 작업을 자동화하는 강력한 도구지만, 단일 패스 방식으로 구현하면 품질이 들쭉날쭉해지는 문제가 있다. 생성과 검증이 하나의 흐름 안에서 동시에 일어나면 어느 쪽도 제대로 하기 어렵기 때문이다. 이 글에서는 그 해법으로 하네스 패턴(Harness Pattern)을 세 스킬에 적용한 과정을 정리한다.
+
+| 스킬 | 역할 |
+|------|------|
+| `note` | Obsidian vault에 마크다운 문서를 생성하는 스킬 |
+| `tech-blog-transformer` | 마크다운 문서를 기술 블로그 포스트로 변환하는 스킬 |
+| `vault-sync` | 외부 데이터(캘린더, Slack)를 수집하여 Obsidian vault 문서를 자동 생성하는 cron 스킬 |
+
+`note` 스킬의 리팩터링과 59개 문서 실험, `tech-blog-transformer`의 4축 채점 기준과 Consistency Checker 사전 필터, 그리고 `vault-sync`의 5레이어 아키텍처와 4버전에 걸친 진화 과정까지 함께 살펴본다.
 
 ### 1. 왜 하네스 패턴이 필요한가
 
