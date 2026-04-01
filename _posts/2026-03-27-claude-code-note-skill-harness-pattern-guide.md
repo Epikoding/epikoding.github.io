@@ -172,7 +172,7 @@ flowchart TB
 
 원인을 파고 들어가 보면 SKILL.md의 재생성 루프 기술 방식에 닿는다. 기존 Step 4 "재생성 루프"는 "Evaluator 피드백을 Generator에 전달한다"는 선언적 기술만 있었고, 오케스트레이터(Claude)가 이를 실제 루프로 실행할지 여부는 모델의 재량에 맡겨진 상태였다. 선언적 지시만으로는 LLM이 루프를 한 번 돌아야 하는지, 건너뛰어도 되는지 판단하기 어렵기 때문에, 모델이 "피드백을 전달했으니 됐다"고 해석하고 다음 단계로 넘어가 버리는 경우가 발생한 것이다.
 
-vault-sync의 구현과 비교해보면 차이가 뚜렷하다. vault-sync에서는 오케스트레이터가 Step 6에서 Evaluator 결과를 직접 읽고 FAIL/PASS를 판정한 뒤 FAIL이면 Step 4(Generator)를 명시적으로 재호출하는 구조인 반면, note에는 이런 절차적 흐름이 없었다. Evaluator의 피드백 구체성도 문제였는데, vault-sync의 Evaluator는 감점 항목마다 구체적인 수정 전략을 반환하는 데 비해 note의 "수정 지시"는 추상적인 수준에 머물러 있었다. 거기에 더해 Generator 쪽에도 재시도 모드라는 개념 자체가 없었다. vault-sync의 Generator는 `{recent_corrections}` 입력을 받아서 증분 수정을 수행하는 경로가 명확한 반면, note의 Generator는 최초 생성과 재시도를 구분하지 않았던 것이다.
+vault-sync의 구현과 비교해보면 차이가 뚜렷하다. 차이는 세 군데에서 나타났다. vault-sync에서는 오케스트레이터가 Step 6에서 Evaluator 결과를 직접 읽고 FAIL/PASS를 판정한 뒤 FAIL이면 Step 4(Generator)를 명시적으로 재호출하는 구조인 반면, note에는 이런 절차적 흐름이 없었다. Evaluator의 피드백 구체성도 문제였다. vault-sync의 Evaluator는 감점 항목마다 구체적인 수정 전략을 반환하는 데 비해 note의 "수정 지시"는 추상적인 수준에 머물러 있었다. 거기에 더해 Generator 쪽에도 재시도 모드라는 개념 자체가 없었다. vault-sync의 Generator는 `{recent_corrections}` 입력을 받아서 증분 수정을 수행하는 경로가 명확한 반면, note의 Generator는 최초 생성과 재시도를 구분하지 않았던 것이다.
 
 수정은 SKILL.md, evaluate.md, generate.md 세 파일에 걸쳐 이루어졌다.
 
@@ -191,9 +191,9 @@ while evaluation.result == "FAIL" and retry_count < 3:
 ```
 {: .nolineno }
 
-vault-sync에 있는 나머지 레이어(invariants, promote-corrections, evaluation-examples 등)는 note에 도입하지 않았다. vault-sync는 매일 수십 개 파일을 무인 생성하는 cron이라 다층 방어가 필요하지만, note는 사용자가 호출할 때 1개 문서를 생성하는 도구여서 Evaluator 루프만으로 충분하다고 판단한 것이다.
+vault-sync에 있는 나머지 레이어(invariants, promote-corrections, evaluation-examples 등)는 note에 도입하지 않았다. vault-sync는 매일 수십 개 파일을 무인 생성하는 cron이라 다층 방어가 필요하지만, note는 사용자가 호출할 때 1개 문서를 생성하는 도구여서 Evaluator 루프만으로 충분하다고 판단한 것이다. 다만 evaluation-examples.md는 실제 FAIL 패턴이 축적되면 추후 추가를 검토할 여지가 있다.
 
-수정 후 첫 실행에서 PASS 19/20을 기록했다. 핵심 교훈은 세 가지로 정리된다. 첫째, 선언적 지시("피드백을 전달한다")만으로는 LLM이 루프를 건너뛸 수 있으니, while 루프 의사코드 같은 절차적 제어가 필요하다. 둘째, Evaluator 피드백은 Generator가 즉시 실행할 수 있을 만큼 구체적이어야 한다. 셋째, Generator에 재시도 모드를 명시적으로 분리해야 최초 생성과 증분 수정이 구분된다.
+수정 후 첫 실행에서 전 항목 PASS를 기록했다. 가장 큰 교훈은 선언적 지시("피드백을 전달한다")만으로는 LLM이 루프를 건너뛸 수 있다는 것이다. while 루프 의사코드 같은 절차적 제어가 필요했고, 거기에 더해 Evaluator 피드백의 구체성과 Generator 재시도 모드 분리까지 갖춰져야 비로소 루프가 수렴했다.
 
 ### 4. 사례 2: tech-blog-transformer 스킬
 
