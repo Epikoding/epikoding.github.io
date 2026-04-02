@@ -386,7 +386,7 @@ Opus 1개가 깊이 있게 보는 것보다, 역할이 다른 Sonnet N개가 각
 
 #### [ v3 구현 - 10축 확장과 4단계 파이프라인 ]
 
-v3에서 에이전트 수가 9개에서 13~14개로 늘어났다. Opus 3개(Generator, 자연스러움, 반례 탐색)와 Sonnet 8~9개(CC + Content Evaluator 4개 + Style Evaluator 3개 + 재현 시뮬레이터)로 구성된다.
+v3에서 오케스트레이터를 포함한 에이전트 수가 9개에서 12~13개로 늘어났다. 서브에이전트는 Opus 3개(Generator, 자연스러움, 반례 탐색)와 Sonnet 8~9개(CC + Content Evaluator 4개 + Style Evaluator 3개 + 재현 시뮬레이터)로 구성된다.
 
 ```mermaid
 flowchart TB
