@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "67a7294e48479b02",
+        "id": "3c6813f4d16db775",
         "type": "tabs",
         "children": [
           {
-            "id": "2e15d89784792100",
+            "id": "619e132e5f613e88",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "_posts/2026-03-27-claude-code-note-skill-harness-pattern-guide.md",
-                "bFile": "_posts/2026-03-27-claude-code-note-skill-harness-pattern-guide.md",
-                "aRef": ""
+                "file": "_posts/2026-03-27-claude-code-note-skill-harness-pattern-guide.md",
+                "mode": "preview",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: 2026-03-27-claude-code-note-skill-harness-pattern-guide  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "2026-03-27-claude-code-note-skill-harness-pattern-guide"
             }
           }
         ]
@@ -206,12 +206,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2e15d89784792100",
+  "active": "619e132e5f613e88",
   "lastOpenFiles": [
+    "_posts/2026-03-27-claude-code-note-skill-harness-pattern-guide.md",
     "posts/slack-thread-reader-skill 1.md",
     "posts/slack-thread-reader-skill.md",
     "posts",
-    "_posts/2026-03-27-claude-code-note-skill-harness-pattern-guide.md",
     "_posts/2026-03-16-nextjs-server-side-prefetching.md",
     "_posts/2026-01-15-thymeleaf-modal-separation-limitations.md",
     "_posts/2026-01-15-spring-validation-groups.md",
