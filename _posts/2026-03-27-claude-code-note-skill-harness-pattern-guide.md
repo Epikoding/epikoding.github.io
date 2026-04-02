@@ -207,25 +207,30 @@ v3.2에서 재시도 루프를 고치고 나서도 해결되지 않는 문제가
 
 이 시점에 마침 `tech-blog-transformer`가 v1(4축 통합 Evaluator)에서 v2(6축 전문 Evaluator, 2단계 평가, CC 확장, UNCLEAR 메커니즘)로 리팩터링을 마친 상태였다. tech-blog에서 검증된 패턴 중 note에 적용할 수 있는 것을 분석했다.
 
-| 패턴 | 적합성 | 판단 |
-|------|--------|------|
-| 6축 Evaluator 분리 | 낮음 (부분 적용) | note의 4기준은 대부분 기계적 검증. Content만 분리 |
-| 2단계 평가 | 적용 | CC -> Content -> Structural 순차 |
-| CC 사전 검사 | 높음 | Obsidian gotcha는 패턴 매칭으로 잡을 수 있음 |
-| UNCLEAR 메커니즘 | 적용 | Content Evaluator가 모호한 항목을 사용자에게 질문 |
-| Final Check | 불필요 | Structural 수정이 Content를 훼손할 위험 낮음 |
+| 패턴              | 적합성        | 판단                                  |
+| --------------- | ---------- | ----------------------------------- |
+| 6축 Evaluator 분리 | 낮음 (부분 적용) | note의 4기준은 대부분 기계적 검증. Content만 분리  |
+| 2단계 평가          | 적용         | CC -> Content -> Structural 순차      |
+| CC 사전 검사        | 높음         | Obsidian gotcha는 패턴 매칭으로 잡을 수 있음    |
+| Generator 가이드라인 | 적용         | QMD 정확 사용, hallucination 방지 등       |
+| UNCLEAR 메커니즘    | 적용         | Content Evaluator가 모호한 항목을 사용자에게 질문 |
+| Final Check     | 불필요        | Structural 수정이 Content를 훼손할 위험 낮음   |
 
 핵심 판단은 "6축 분리를 그대로 가져오는 것이 아니라, note에 맞게 선별 적용한다"는 것이었다. tech-blog는 자연스러움, 논리적 엄밀성 같은 주관적 품질 축이 중요하기 때문에 6축 전문 Evaluator가 필요하지만, note의 Format, Placement, Metadata는 기계적으로 검증 가능한 항목이라 하나로 묶어도 충분하다. 대신 진짜 문제인 Content만 별도 Evaluator로 분리하는 것이 적절했다.
 
-이 분석을 바탕으로 네 가지 핵심 설계 결정을 내렸다.
+이 분석을 바탕으로 여섯 가지 핵심 설계 결정을 내렸다.
 
 **Evaluator 분리 구조**: 기존 하나의 Evaluator를 CC(Consistency Checker) + Content Evaluator + Structural Evaluator 세 개로 분리했다. CC는 8종 Obsidian gotcha를 기계적으로 검사하고, Content Evaluator는 원본 대비 충실도에 집중하며, Structural Evaluator는 Format/Placement/Metadata를 담당한다.
 
-**Intent Brief 도입**: Generator가 사용자의 의도를 추측하는 문제를 해결하기 위해, 오케스트레이터가 사전에 사용자에게 대화 내용을 확인받는 단계를 추가했다. 자명한 경우(1-2문장의 단순 요청)만 생략할 수 있고, 나머지는 Intent Brief를 필수로 거친다.
+**Intent Brief 도입**: Generator가 사용자의 의도를 추측하는 문제를 해결하기 위해, 오케스트레이터가 사전에 사용자에게 대화 내용을 확인받는 단계를 추가했다. 구체적으로는 오케스트레이터가 대화 내용을 먼저 export하여 파일로 만든 뒤 그 파일 링크를 Generator에 첨부하는 방식이다. 이렇게 하면 Generator가 긴 대화의 맥락을 누락 없이 참조할 수 있게 된다. 자명한 경우(1-2문장의 단순 요청)만 생략할 수 있고, 나머지는 Intent Brief를 필수로 거친다.
 
 **UNCLEAR 메커니즘**: Content Evaluator가 원본과 대조하다가 "이 부분이 원본에 없는데, 의도적으로 추가한 것인지 누락인지 판단할 수 없다"는 상황이 생기면 UNCLEAR로 표시하고 사용자에게 확인을 요청한다. tech-blog v2에서 가져온 패턴으로, Evaluator가 모호함을 삼키지 않고 표면화하는 것이 핵심이다.
 
+**소스 물리화**: 소스를 vault의 `10. Fleeting Notes/`에 export하는 방식을 채택했다. 이렇게 하면 세션이 끊기더라도 새 세션에서 소스 파일을 읽어 작업을 이어갈 수 있다.
+
 **최소 점수 상향**: Content와 Placement 모두 최소 3점에서 4점으로 상향했다. 3점은 "핵심은 포함되었으나 세부사항 일부 누락"인데, 이 수준이면 사용자가 직접 보완해야 하는 양이 많아서 스킬의 가치가 반감되기 때문이다.
+
+**루프 규칙**: CC + Content 평가는 최대 5회, Structural 평가는 최대 3회, 전체 루프는 7회로 제한했다. Content FAIL 시에는 CC부터 재시작하고, Structural FAIL 시에는 Structural만 재평가하는 구조다.
 
 v3.2에서 v4.0으로의 아키텍처 변경을 시각화하면 다음과 같다.
 
