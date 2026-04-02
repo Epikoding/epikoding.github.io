@@ -449,7 +449,7 @@ Projects 28개가 복원되고, Invariants 10종이 3일 모두 안정적으로 
 
 #### [ 공통 패턴 ]
 
-`note`의 v4.0 Evaluator 분리, `tech-blog-transformer`의 6축 채점 기준, `vault-sync`의 5레이어 아키텍처까지, 세 스킬의 구현을 마치고 돌아보니 몇 가지 공통적인 패턴이 눈에 들어왔다.
+`note`의 v4.0 Evaluator 분리, `tech-blog-transformer`의 4축 채점 기준, `vault-sync`의 5레이어 아키텍처까지, 세 스킬의 구현을 마치고 돌아보니 몇 가지 공통적인 패턴이 눈에 들어왔다.
 
 가장 큰 효과는 프롬프트를 독립적으로 개선할 수 있게 된 점이다. Generator의 프롬프트를 바꿔도 Evaluator의 기준은 그대로이고, 반대도 마찬가지여서, 한쪽을 수정할 때 다른 쪽이 깨질 걱정이 없어졌다. vault-sync에서는 이 독립성이 특히 빛을 발했는데, v4에서 Generator 프롬프트만 v1으로 롤백하면서 하네스 레이어는 그대로 유지할 수 있었던 것이 바로 이 분리 덕분이다.
 
