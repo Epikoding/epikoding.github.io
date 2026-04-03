@@ -117,7 +117,7 @@ else:
 
 #### [ 채널 모드 ]
 
-파싱 버그를 잡으면서 자연스럽게 세 가지 모드가 정리되었습니다. 채널 링크를 넘기면 히스토리를 가져오는데, 기본값은 전체 수집이고 `--limit`으로 제한할 수 있습니다.
+query string 파싱을 추가하면서 답글 모드가 분리되었고, 덕분에 기존 쓰레드 모드와 채널 모드까지 세 가지 모드가 명확해졌습니다. 채널 링크를 넘기면 히스토리를 가져오는데, 기본값은 전체 수집이고 `--limit`으로 제한할 수 있습니다.
 
 ```bash
 scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL
@@ -165,7 +165,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 모드 분기를 마치고 나서 신경 쓴 건 출력 형식이었습니다. 기존에는 내림차순(최신 먼저)이 기본이었는데, 오름차순(과거부터 최신)으로 바꿨습니다.
 
-질문 다음에 답변이 오고, 피드백 뒤에 수정본이 오는 순차적 흐름을 그대로 읽을 수 있어서, LLM이 대화 맥락을 파악하기에 훨씬 자연스럽습니다. LLM이 긴 입력의 중간부를 놓치기 쉽다는 경향(lost in the middle)을 고려하면, 최신 내용이 입력의 끝에 오는 오름차순이 유리하기도 합니다.
+질문 다음에 답변이 오고, 피드백 뒤에 수정본이 오는 순차적 흐름을 그대로 읽을 수 있어서, LLM이 대화 맥락을 파악하기에도 자연스럽습니다.
 
 #### [ 메시지 포맷 ]
 
@@ -201,7 +201,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 `https://{workspace}.slack.com/files/` 접두사는 워크스페이스 내에서 고정값이므로 제거했고, URL 인코딩된 파일명도 `📎` 뒤에 이미 표시되니 중복 제거했습니다. `USER_ID/FILE_ID`만 있으면 전체 URL을 복원할 수 있기 때문에, 정보 손실 없이 축약이 가능합니다.
 
-디자인 팀 채널처럼 스크린샷과 시안 파일이 대량으로 공유되는 곳에서는, 이 축약만으로도 상당한 토큰 절약 효과가 있습니다.
+디자인 팀 채널처럼 스크린샷과 시안 파일이 대량으로 공유되는 곳에서는, 이 축약만으로도 눈에 띄는 차이가 생깁니다.
 
 ### 5. 안정성과 병렬 처리
 
@@ -232,7 +232,7 @@ class SlackClient:
                     self._rate_wait_until = time.time() + retry_after  # 대기 시점 갱신
 ```
 
-> 이 방식은 완벽한 serialization은 아닙니다. Lock 해제 후 sleep 전에 다른 워커가 끼어들 수 있지만, thundering herd를 대폭 줄이는 것만으로도 실사용에서 충분했습니다.
+> 이 방식은 완벽한 serialization은 아닙니다. Lock 해제 후 sleep 전에 다른 워커가 끼어들 수 있지만, thundering herd를 줄이는 것만으로도 실사용에서 충분했습니다.
 {: .prompt-info }
 
 #### [ 에러 격리 ]
