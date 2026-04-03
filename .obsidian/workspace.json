@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3c6813f4d16db775",
+        "id": "e6aa1de111bedb63",
         "type": "tabs",
         "children": [
           {
-            "id": "619e132e5f613e88",
+            "id": "a174cde2f84fe982",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -206,13 +206,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "619e132e5f613e88",
+  "active": "a174cde2f84fe982",
   "lastOpenFiles": [
+    "_posts/2026-03-04-slack-thread-reader-v2.md",
+    "_posts/2026-03-16-nextjs-server-side-prefetching.md",
     "_posts/2026-03-27-claude-code-note-skill-harness-pattern-guide.md",
+    "_posts/2026-02-19-karabiner-finder-path-copy.md",
+    "_posts/2026-02-05-claude-skill-complete-guide.md",
+    "_posts/2026-01-14-ssr-get-post-exception-handling.md",
+    "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
+    "_posts/2025-01-10-obsidian-sync-blog.md.md",
+    "_posts/2025-01-10-Mac을 더 편리하게 사용하기 위한 유틸리티 모음.md.md",
     "posts/slack-thread-reader-skill 1.md",
     "posts/slack-thread-reader-skill.md",
     "posts",
-    "_posts/2026-03-16-nextjs-server-side-prefetching.md",
     "_posts/2026-01-15-thymeleaf-modal-separation-limitations.md",
     "_posts/2026-01-15-spring-validation-groups.md",
     "_posts/2026-01-19-hidden-container-ui-rendering-issue.md",
@@ -221,18 +228,11 @@
     "_posts/2026-01-27-claude-code-skills-guide.md",
     "_posts/2026-02-06-claude-code-activity-monitor-swiftbar.md",
     "_posts/2026-02-03-prometheus-alertmanager-troubleshooting.md",
-    "_posts/2026-02-05-claude-skill-complete-guide.md",
     "_posts/2026-02-16-slack-thread-reader-skill.md",
-    "_posts/2026-03-04-slack-thread-reader-v2.md",
     "_posts/2026-03-27-claude-code-note-skill-harness-pattern.md",
     "_posts/2026-03-27-note-skill-v3-harness-pattern.md",
     "_posts/2026-03-27-note-skill-v3-harness-pattern-guide.md",
     "_posts/2026-03-04-google-sheets-calendar-sync-system.md",
-    "_posts/2026-02-19-karabiner-finder-path-copy.md",
-    "_posts/2026-01-14-ssr-get-post-exception-handling.md",
-    "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
-    "_posts/2025-01-10-obsidian-sync-blog.md.md",
-    "_posts/2025-01-10-Mac을 더 편리하게 사용하기 위한 유틸리티 모음.md.md",
     "_posts/2026-02-16-slack-thread-reader-skill-v2.md",
     "assets/js/custom/mermaid-theme.js",
     "assets/js/custom",
