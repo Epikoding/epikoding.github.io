@@ -184,7 +184,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 [2026-03-04T14:32:28|1772601524.234679] 이정호: QA 이슈 정리 [thread replies:5 latest:2026-03-04T16:00:12]
 ```
 
-> 채널 이름 조회(`conversations.info`)와 메시지 fetch를 `ThreadPoolExecutor`로 병렬 실행하여 응답 대기 시간을 단축했습니다.
+> 채널 이름 조회(`conversations.info`)와 메시지 fetch를 병렬 실행하여 응답 대기 시간을 단축했습니다. 병렬 처리 구현은 [섹션 5](#5-안정성과-병렬-처리)에서 자세히 다룹니다.
 {: .prompt-tip }
 
 #### [ 토큰 절약 - permalink 축약 ]
