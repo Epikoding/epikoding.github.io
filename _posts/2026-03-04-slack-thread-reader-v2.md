@@ -137,7 +137,7 @@ scripts/slack-thread.sh CHANNEL_ID --from 2026-03-01 --to 2026-03-04
 쓰레드 링크를 넘기면 부모 메시지 포함 전체 답글을 가져옵니다. `--limit`은 적용되지 않고, 페이지네이션으로 모든 답글을 빠짐없이 수집하는 구조입니다.
 
 ```bash
-scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL/pTIMESTAMP
+scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL/pTS
 ```
 
 #### [ 답글 모드 ]
@@ -205,7 +205,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 ### 5. 안정성과 병렬 처리
 
-#### [ Rate limit 경합 방지 ]
+#### [ Rate Limit 경합 방지 ]
 
 출력을 최적화한 뒤에는 안정성 쪽을 손봤습니다. `--with-threads`를 사용하면 최대 8개 워커가 동시에 Slack API를 호출하는데, 여러 워커가 동시에 429(Rate Limit)를 받으면 각각 `Retry-After`만큼 대기한 뒤 또 동시에 요청하는 thundering herd 문제가 발생할 수 있습니다.
 
