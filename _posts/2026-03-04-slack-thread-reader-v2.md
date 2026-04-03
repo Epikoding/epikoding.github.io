@@ -36,7 +36,7 @@ flowchart LR
 
 Slack에서 메시지 링크를 복사하면 세 가지 형태가 나옵니다.
 
-```
+```text
 채널:    https://workspace.slack.com/archives/C07G23FAJS3
 쓰레드:  https://workspace.slack.com/archives/C07G23FAJS3/p1770775935866499
 답글:    https://workspace.slack.com/archives/C07G23FAJS3/p1770776063826049?thread_ts=1770775935.866499&cid=C07G23FAJS3
@@ -75,6 +75,7 @@ ts = f"{raw_ts[:10]}.{raw_ts[10:]}"  # "1770775935.866499"
 def parse_slack_link(link):
     m = re.search(r'/archives/([^/]+)/p(\d+)', link)
     if m:
+        raw_ts = m.group(2)
         return m.group(1), f"{raw_ts[:10]}.{raw_ts[10:]}"
 ```
 
@@ -139,7 +140,7 @@ scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL/pTIMESTAMP
 
 #### [ 답글 모드 ]
 
-답글 링크를 넘기면 해당 답글 1건만 가져옵니다. `conversations.replies` API에 `oldest=latest=reply_ts`로 범위를 좁혀서, 불필요한 메시지 수신 없이 딱 한 건만 조회하는 방식입니다.
+답글 링크를 넘기면 해당 답글 1건만 가져옵니다. `conversations.replies` API에 `oldest`와 `latest`를 모두 `reply_ts`로 설정하고 `inclusive=true`, `limit=1`을 붙여서 해당 답글만 조회하는 방식입니다.
 
 ```bash
 scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread_ts=...&cid=..."
@@ -149,7 +150,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 | 옵션 | 설명 | 기본값 |
 |------|------|--------|
-| `--limit N` | 채널 히스토리 메시지 수 (0=전체) | 0 |
+| `--limit N` | 채널 모드 히스토리 메시지 수 (0=전체) | 0 |
 | `--from YYYY-MM-DD` | 이 날짜 이후 메시지만 | 없음 |
 | `--to YYYY-MM-DD` | 이 날짜까지 메시지만 | 없음 |
 | `--with-threads` | 쓰레드 답글 인라인 포함 | off |
@@ -166,7 +167,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 도입부에서 언급한 "채널 이름 대신 ID만 보이는" 문제도 여기서 해결했습니다. `conversations.info` API로 채널 이름을 조회해서, 헤더에 ID와 함께 `#product-design`처럼 표시하도록 변경했습니다. 각 메시지에는 ISO 타임스탬프와 Slack ts(메시지 고유 ID)가 포함되고, 참여자 목록도 헤더에 표시됩니다.
 
-```
+```text
 [thread] ch:C01ABC2DEF3(#product-design) parent:1770775935.866499 replies:23 range:2026-02-10~2026-03-04
 [participants] 김수진, 이정호, 박민지 (3명)
 [2026-02-10T10:15:35|1770775935.866499] 김수진: *[모바일 앱 리뉴얼]*
@@ -175,7 +176,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 채널 모드에서는 쓰레드가 있는 메시지에 답글 수와 최신 답글 시간이 태그로 붙습니다.
 
-```
+```text
 [2026-03-04T14:32:28|1772601524.234679] 이정호: QA 이슈 정리 [thread replies:5 latest:2026-03-04T16:00:12]
 ```
 
@@ -186,9 +187,9 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 출력 형식을 다듬다 보니, 첨부파일의 Slack permalink URL이 의외로 토큰을 많이 잡아먹고 있었습니다. 실제 채널 출력에서 파일 하나당 80자 이상이 URL에 사용되는 경우가 흔했습니다.
 
-```
+```text
 # 변경 전
-📎스크린샷.png https://myteam.slack.com/files/U07A1B2C3D4/F08E5F6G7H8/_______2026-02-09______4.12.03.png
+📎스크린샷.png https://workspace.slack.com/files/U07A1B2C3D4/F08E5F6G7H8/_______2026-02-09______4.12.03.png
 
 # 변경 후
 📎스크린샷.png U07A1B2C3D4/F08E5F6G7H8
@@ -218,7 +219,8 @@ class SlackClient:
             wait = self._rate_wait_until - time.time()  # 남은 대기 시간 계산
         if wait > 0:
             time.sleep(wait)                     # 아직 대기 중이면 sleep
-        # ... API 호출 ...
+        try:
+            # ... API 호출 ...
         except urllib.error.HTTPError as e:
             if e.code == 429:                    # Rate Limit 초과
                 retry_after = int(e.headers.get("Retry-After", "5"))
@@ -234,7 +236,7 @@ class SlackClient:
 
 `except BaseException`으로 변경하여 개별 쓰레드 실패 시 해당 쓰레드만 스킵하고 나머지는 계속 진행하도록 수정했습니다. 실패한 쓰레드는 stderr에 요약 출력됩니다.
 
-```
+```text
 [warn] 2/15 threads failed: 1770775935.866499, 1770776063.826049
 ```
 
