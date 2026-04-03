@@ -48,14 +48,14 @@ Slack에서 메시지 링크를 복사하면 세 가지 형태가 나옵니다.
 
 #### [ pTS와 ts의 관계 ]
 
-URL에 보이는 `p1770775935866499`과 API에서 사용하는 `1770775935.866499`는 같은 값입니다. 표기 방식만 다릅니다.
+URL에 보이는 `p1770775935866499`과 API에서 사용하는 `1770775935.866499`는 같은 값인데, 표기 방식만 다릅니다.
 
 | 위치 | 형식 | 예시 |
 |------|------|------|
 | URL path | `p` + 숫자 연결 | `p1770775935866499` |
 | API / query string | 초.마이크로초 | `1770775935.866499` |
 
-`p` 접두사를 떼고 앞 10자리와 뒤 6자리 사이에 `.`을 넣으면 API용 ts 형식이 됩니다. Slack은 이 ts를 메시지의 고유 ID로 사용하기 때문에, 채널 내에서 ts만 알면 특정 메시지를 정확히 식별할 수 있습니다.
+`p` 접두사를 떼고 앞 10자리와 뒤 6자리 사이에 `.`을 넣으면 API용 ts 형식으로 변환할 수 있습니다. Slack은 이 ts를 메시지의 고유 ID로 사용하기 때문에, 채널 내에서 ts만 알면 특정 메시지를 정확히 식별 가능합니다.
 
 ```python
 raw_ts = "1770775935866499"
@@ -117,7 +117,9 @@ else:
 
 #### [ 채널 모드 ]
 
-query string 파싱을 추가하면서 답글 모드가 분리되었고, 덕분에 기존 쓰레드 모드와 채널 모드까지 세 가지 모드가 명확해졌습니다. 채널 링크를 넘기면 히스토리를 가져오는데, 기본값은 전체 수집이고 `--limit`으로 제한할 수 있습니다.
+query string 파싱을 추가하면서 답글 모드가 분리되었고, 덕분에 기존 쓰레드 모드와 채널 모드까지 세 가지 모드가 명확해졌습니다. 설치와 기본 설정은 [이전 포스팅](/posts/slack-thread-reader-skill/)을 참고하세요.
+
+채널 링크를 넘기면 히스토리를 가져오는데, 기본값은 전체 수집이고 `--limit`으로 제한할 수 있습니다.
 
 ```bash
 scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL
@@ -134,7 +136,7 @@ scripts/slack-thread.sh CHANNEL_ID --from 2026-03-01 --to 2026-03-04
 
 #### [ 쓰레드 모드 ]
 
-쓰레드 링크를 넘기면 부모 메시지 포함 전체 답글을 가져옵니다. `--limit`은 적용되지 않고, 페이지네이션으로 모든 답글을 빠짐없이 수집하는 구조입니다.
+쓰레드 링크를 넘기면 부모 메시지 포함 전체 답글을 가져옵니다. 쓰레드는 하나의 논의 단위이므로 `--limit`을 적용하지 않고, 페이지네이션으로 모든 답글을 빠짐없이 수집하는 구조입니다. 중간 답글이 빠지면 맥락이 끊기기 때문입니다.
 
 ```bash
 scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL/pTS
@@ -142,7 +144,7 @@ scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL/pTS
 
 #### [ 답글 모드 ]
 
-답글 링크를 넘기면 해당 답글 1건만 가져옵니다. `conversations.replies` API에 `oldest`와 `latest`를 모두 해당 답글의 ts로 설정하고 `inclusive=true`, `limit=1`을 지정하여 정확히 그 답글만 조회하는 방식입니다.
+답글 링크를 넘기면 해당 답글 1건만 조회합니다. 쓰레드 전체가 아닌 특정 답글만 LLM에 넘기고 싶을 때를 위해 분리했는데, `conversations.replies` API에 `oldest`와 `latest`를 모두 해당 답글의 ts로 설정하고 `inclusive=true`, `limit=1`을 지정하여 정확히 그 답글만 가져오는 방식입니다.
 
 ```bash
 scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread_ts=...&cid=..."
@@ -207,7 +209,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 #### [ Rate Limit 경합 방지 ]
 
-출력을 최적화한 뒤에는 안정성 쪽을 손봤습니다. `--with-threads`를 사용하면 최대 8개 워커가 동시에 Slack API를 호출하는데, 여러 워커가 동시에 429(Rate Limit)를 받으면 각각 `Retry-After`만큼 대기한 뒤 또 동시에 요청하는 thundering herd 문제가 발생할 수 있습니다.
+출력을 최적화한 뒤에는 안정성 쪽을 손봤습니다. `--with-threads`를 사용하면 최대 8개 워커가 동시에 Slack API를 호출하는데(Python `ThreadPoolExecutor`의 기본 `max_workers`가 CPU 코어 수 기반으로 대체로 이 근처 값입니다), 여러 워커가 동시에 429(Rate Limit)를 받으면 각각 `Retry-After`만큼 대기한 뒤 또 동시에 요청하는 thundering herd 문제가 발생할 수 있습니다.
 
 이를 방지하기 위해 `SlackClient`에 `threading.Lock`과 `_rate_wait_until` 타임스탬프를 공유했습니다. 한 워커가 429를 받으면 대기 시점을 갱신하고, 다른 워커들은 요청 전에 이 값을 확인해서 불필요한 요청을 보내지 않는 구조입니다.
 
@@ -249,7 +251,7 @@ class SlackClient:
 
 #### [ 유저 캐시 ]
 
-사용자 ID를 실명으로 변환하기 위해 `users.info` API를 호출하는데, 매번 호출하면 느리기 때문에 `~/.cache/slack-reader/users.json`에 유저 맵을 캐싱했습니다. TTL 24시간 이내면 캐시에서 읽는 구조입니다.
+사용자 ID를 실명으로 변환하기 위해 `users.info` API를 호출하는데, 매번 호출하면 느리기 때문에 `~/.cache/slack-reader/users.json`{: .filepath}에 유저 맵을 캐싱했습니다. TTL 24시간 이내면 캐시에서 읽는 구조입니다.
 
 캐시를 구현하면서 한 가지 실수가 있었습니다. `_ts`(타임스탬프)를 매번 현재 시간으로 갱신하다 보니, 새 유저가 한 명이라도 추가될 때마다 기존 유저 전체의 TTL이 리셋되는 문제가 생겼습니다. 기존 `_ts`를 유지하고 만료 시에만 새로 설정하도록 고쳐서 해결했습니다.
 
