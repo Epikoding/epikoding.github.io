@@ -205,11 +205,11 @@ v3.2에서 재시도 루프를 고치고 나서도 해결되지 않는 문제가
 
 세 문제의 공통 원인은 하나의 Evaluator가 Format, Content, Placement, Metadata를 통합 평가하는 구조에 있었다. Content 평가에는 원본과의 대조가 필요한데, 다른 기준까지 함께 보다 보니 Content 검증의 깊이가 얕아진 것이다.
 
-이 시점에 마침 `tech-blog-transformer`가 v1(4축 통합 Evaluator)에서 v2(6축 전문 Evaluator, 2단계 평가, CC 확장, UNCLEAR 메커니즘)로 리팩터링을 마친 상태였다. tech-blog에서 검증된 패턴 중 note에 적용 가능한 것을 분석했는데, 핵심 판단은 "6축 분리를 그대로 가져오지 않고 선별 적용한다"는 것이었다.
+이 시점에 마침 `tech-blog-transformer`가 v1(4축 통합 Evaluator)에서 v2(6축 전문 Evaluator, 2단계 평가, Consistency Checker 확장, UNCLEAR 메커니즘)로 리팩터링을 마친 상태였다. tech-blog에서 검증된 패턴 중 note에 적용 가능한 것을 분석했는데, 핵심 판단은 "6축 분리를 그대로 가져오지 않고 선별 적용한다"는 것이었다.
 
 | 적용한 패턴 | 적용하지 않은 패턴 |
 | --------- | ------------- |
-| CC 사전 검사, 2단계 평가(CC -> Content -> Structural), UNCLEAR 메커니즘 | 6축 Evaluator 전체 분리(Content만 분리), Final Check(Structural이 Content를 훼손할 위험 낮음) |
+| Consistency Checker(CC) 사전 검사, 2단계 평가(CC -> Content -> Structural), UNCLEAR 메커니즘 | 6축 Evaluator 전체 분리(Content만 분리), Final Check(Structural이 Content를 훼손할 위험 낮음) |
 
 tech-blog는 자연스러움, 논리적 엄밀성 같은 주관적 품질 축이 중요해서 6축 전문 Evaluator가 필요하지만, note의 Format/Placement/Metadata는 기계적 검증이 가능한 항목이라 하나로 묶어도 충분하기 때문이다.
 
