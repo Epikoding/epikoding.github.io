@@ -122,7 +122,7 @@ flowchart TB
 
     SKILL["SKILL.md<br/>(오케스트레이터)"]:::orchestrator
     GEN["Generator<br/>문서 생성"]:::generator
-    EVAL["Evaluator<br/>4기준 검증"]:::evaluator
+    EVAL["Evaluator<br/>4기준 통합"]:::evaluator
     JUDGE["오케스트레이터<br/>PASS/FAIL 판정"]:::orchestrator
     REF["references/<br/>templates, gotchas,<br/>directory-guide, vault-rules"]:::reference
 
@@ -471,6 +471,8 @@ flowchart TB
     FINAL -->|승인| DONE["완료"]
     FINAL -->|재작업| GEN
 ```
+
+신규 모드에서는 Generator가 가이드와 회고 두 스타일로 병렬 생성한 뒤 사용자가 하나를 선택하는 Phase 3(스타일 선택)을 거친다. 업데이트 모드에서는 이 단계를 건너뛴다.
 
 채점 기준도 6축에서 10축으로 확장했다. 기존 6축(자연스러움, 구조적 완성도, 기술적 정확성, 논리적 엄밀성, 약속 이행, 포맷 준수)에 14에이전트 실험에서 발견한 4개 영역을 추가한 것이다.
 
