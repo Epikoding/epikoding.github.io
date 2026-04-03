@@ -205,7 +205,7 @@ v3.2에서 재시도 루프를 고치고 나서도 해결되지 않는 문제가
 
 세 문제의 공통 원인은 하나의 Evaluator가 Format, Content, Placement, Metadata를 통합 평가하는 구조에 있었다. Content 평가에는 원본과의 대조가 필요한데, 다른 기준까지 함께 보다 보니 Content 검증의 깊이가 얕아진 것이다.
 
-이 시점에 마침 `tech-blog-transformer`가 v1에서 v2로 리팩터링을 마친 상태였다(v2의 상세 내용은 4절에서 다룬다). tech-blog에서 검증된 패턴 중 note에 적용 가능한 것을 분석했는데, 핵심 판단은 "6축 분리를 그대로 가져오지 않고 선별 적용한다"는 것이었다.
+이 시점에 마침 `tech-blog-transformer`가 v1에서 v2로 리팩터링을 마친 상태였다(v2의 상세 내용은 4절에서 다룬다). tech-blog-transformer에서 검증된 패턴 중 note에 적용 가능한 것을 분석했는데, 핵심 판단은 "6축 분리를 그대로 가져오지 않고 선별 적용한다"는 것이었다.
 
 | 적용한 패턴 | 적용하지 않은 패턴 |
 | --------- | ------------- |
@@ -249,7 +249,7 @@ flowchart TB
         SE2["Structural Evaluator<br/>Format/Placement/Metadata"]:::evaluator
         S2 --> IB --> G2 --> CC2 --> CE2 --> SE2
         CC2 -->|"FAIL"| G2
-        CE2 -->|"FAIL"| G2
+        CE2 -->|"FAIL"| CC2
         SE2 -->|"FAIL"| G2
     end
 ```
