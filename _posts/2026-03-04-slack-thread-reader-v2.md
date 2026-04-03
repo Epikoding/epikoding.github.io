@@ -108,9 +108,9 @@ def parse_slack_link(link):
 if ts and thread_ts:
     # 답글 모드: 해당 답글 1건만 조회
 elif ts:
-    # Thread 모드: 전체 쓰레드 조회
+    # 쓰레드 모드: 전체 쓰레드 조회
 else:
-    # Channel 모드: 채널 히스토리 조회
+    # 채널 모드: 채널 히스토리 조회
 ```
 
 ### 3. 3가지 모드와 사용법
