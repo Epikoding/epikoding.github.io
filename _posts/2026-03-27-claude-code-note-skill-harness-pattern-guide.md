@@ -122,7 +122,7 @@ flowchart TB
 
     SKILL["SKILL.md<br/>(오케스트레이터)"]:::orchestrator
     GEN["Generator<br/>문서 생성"]:::generator
-    EVAL["Evaluator<br/>4-criteria 검증"]:::evaluator
+    EVAL["Evaluator<br/>4기준 검증"]:::evaluator
     JUDGE["오케스트레이터<br/>PASS/FAIL 판정"]:::orchestrator
     REF["references/<br/>templates, gotchas,<br/>directory-guide, vault-rules"]:::reference
 
@@ -191,7 +191,7 @@ while evaluation.result == "FAIL" and retry_count < 3:
 ```
 {: .nolineno }
 
-vault-sync에 있는 나머지 레이어(invariants, promote-corrections, evaluation-examples 등)는 note에 도입하지 않았다. vault-sync는 매일 수십 개 파일을 무인 생성하는 cron이라 다층 방어가 필요하지만, note는 사용자가 호출할 때 1개 문서를 생성하는 도구여서 Evaluator 루프만으로 충분하다고 판단한 것이다. 다만 evaluation-examples.md는 실제 FAIL 패턴이 축적되면 추후 추가를 검토할 여지가 있다.
+vault-sync에 있는 나머지 레이어(Mechanical Invariants, Correction Promotion, evaluation-examples 등)는 note에 도입하지 않았다. vault-sync는 매일 수십 개 파일을 무인 생성하는 cron이라 다층 방어가 필요하지만, note는 사용자가 호출할 때 1개 문서를 생성하는 도구여서 Evaluator 루프만으로 충분하다고 판단한 것이다. 다만 evaluation-examples.md는 실제 FAIL 패턴이 축적되면 추후 추가를 검토할 여지가 있다.
 
 수정 후 첫 실행에서 전 항목 PASS를 기록했다. 가장 큰 교훈은 선언적 지시("피드백을 전달한다")만으로는 LLM이 루프를 건너뛸 수 있다는 것이다. while 루프 의사코드 같은 절차적 제어가 필요했고, 거기에 더해 Evaluator 피드백의 구체성과 Generator 재시도 모드 분리까지 갖춰져야 비로소 루프가 수렴했다.
 
@@ -456,17 +456,17 @@ flowchart TB
     CC3 -->|FAIL| GEN
     CC4 -->|FAIL| GEN
     CC5 -->|FAIL| GEN
-    CC1 -->|PASS| SF
-    CC2 -->|PASS| SF
-    CC3 -->|PASS| SF
-    CC4 -->|PASS| SF
-    CC5 -->|PASS| SF
-    SF --> CONTENT
-    CONTENT -->|FAIL| GEN
+    CC1 -->|PASS| CONTENT
+    CC2 -->|PASS| CONTENT
+    CC3 -->|PASS| CONTENT
+    CC4 -->|PASS| CONTENT
+    CC5 -->|PASS| CONTENT
+    CONTENT -->|FAIL| SF
     CONTENT -->|PASS| STYLE
-    STYLE -->|FAIL| GEN
+    STYLE -->|FAIL| SF
     STYLE -->|PASS| META
-    META -->|FAIL| GEN
+    META -->|FAIL| SF
+    SF -->|재작업 대상| GEN
     META -->|PASS| FINAL
     FINAL -->|승인| DONE["완료"]
     FINAL -->|재작업| GEN
