@@ -23,11 +23,15 @@ mermaid: true
 
 ```mermaid
 flowchart LR
-    A[Slack 링크] -->|링크 파싱| B{모드 분기}
-    B -->|채널 링크| C[채널 히스토리]
-    B -->|쓰레드 링크| D[쓰레드 전체]
-    B -->|답글 링크| E[답글 1건]
-    C --> F[LLM 최적화 출력]
+    classDef process fill:#cce5ff,stroke:#007bff,color:#1a1a1a
+    classDef decision fill:#fff3cd,stroke:#ffc107,color:#1a1a1a
+    classDef result fill:#d4edda,stroke:#28a745,color:#1a1a1a
+
+    A[Slack 링크]:::process -->|링크 파싱| B{모드 분기}:::decision
+    B -->|채널 링크| C[채널 히스토리]:::process
+    B -->|쓰레드 링크| D[쓰레드 전체]:::process
+    B -->|답글 링크| E[답글 1건]:::process
+    C --> F[LLM 최적화 출력]:::result
     D --> F
     E --> F
 ```
@@ -44,7 +48,7 @@ Slack에서 메시지 링크를 복사하면 세 가지 형태가 나옵니다.
 답글:    https://workspace.slack.com/archives/C07G23FAJS3/p1770776063826049?thread_ts=1770775935.866499&cid=C07G23FAJS3
 ```
 
-채널 링크는 `/archives/채널ID`까지만 있고, 쓰레드 링크는 뒤에 `pTS`가 붙습니다. 답글 링크에는 여기에 `?thread_ts=...&cid=...` 쿼리 파라미터가 추가되는데, 이 구분이 중요한 이유는 뒤에서 다룹니다.
+채널 링크는 `/archives/채널ID`까지만 있고, 쓰레드 링크는 뒤에 `pTS`가 붙습니다. 답글 링크에는 여기에 `?thread_ts=...&cid=...` 쿼리 파라미터가 추가되는데요, 이 구분이 중요한 이유는 뒤에서 다룹니다.
 
 #### [ pTS와 ts의 관계 ]
 
@@ -55,7 +59,7 @@ URL에 보이는 `p1770775935866499`과 API에서 사용하는 `1770775935.86649
 | URL path | `p` + 숫자 연결 | `p1770775935866499` |
 | API / query string | 초.마이크로초 | `1770775935.866499` |
 
-`p` 접두사를 떼고 앞 10자리와 뒤 6자리 사이에 `.`을 넣으면 API용 ts 형식으로 변환할 수 있습니다. Slack은 이 ts를 메시지의 고유 ID로 사용하기 때문에, 채널 내에서 ts만 알면 특정 메시지를 정확히 식별 가능합니다.
+`p` 접두사를 떼고 앞 10자리와 뒤 6자리 사이에 `.`을 넣으면 API용 ts 형식으로 변환할 수 있습니다. Slack은 이 ts를 메시지의 고유 ID로 사용하기 때문에, 채널 내에서 ts만 알면 특정 메시지를 정확히 식별할 수 있거든요.
 
 ```python
 raw_ts = "1770775935866499"
@@ -209,7 +213,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 #### [ Rate Limit 경합 방지 ]
 
-출력을 최적화한 뒤에는 안정성 쪽을 손봤습니다. `--with-threads`를 사용하면 최대 8개 워커가 동시에 Slack API를 호출하는데(Python `ThreadPoolExecutor`의 기본 `max_workers`가 CPU 코어 수 기반으로 대체로 이 근처 값입니다), 여러 워커가 동시에 429(Rate Limit)를 받으면 각각 `Retry-After`만큼 대기한 뒤 또 동시에 요청하는 thundering herd 문제가 발생할 수 있습니다.
+출력을 최적화한 뒤에는 안정성 쪽을 손봤습니다. `--with-threads`를 사용하면 여러 워커가 동시에 Slack API를 호출하는데(Python 3.8+ `ThreadPoolExecutor`의 기본 `max_workers`는 `min(32, os.cpu_count() + 4)`), 여러 워커가 동시에 429(Rate Limit)를 받으면 각각 `Retry-After`만큼 대기한 뒤 또 동시에 요청하는 thundering herd 문제 --- 요청이 한꺼번에 몰리는 현상 --- 가 발생할 수 있습니다.
 
 이를 방지하기 위해 `SlackClient`에 `threading.Lock`과 `_rate_wait_until` 타임스탬프를 공유했습니다. 한 워커가 429를 받으면 대기 시점을 갱신하고, 다른 워커들은 요청 전에 이 값을 확인해서 불필요한 요청을 보내지 않는 구조입니다.
 
@@ -241,7 +245,7 @@ class SlackClient:
 
 쓰레드 답글을 병렬로 가져올 때 한 쓰레드의 API 에러가 전체를 crash시키면 곤란합니다.
 
-기존에는 `except Exception`으로 에러를 잡고 있었는데, 여기에 함정이 있었습니다. `fetch_thread` 내부의 `sys.exit(1)`이 발생시키는 `SystemExit`은 Python에서 `BaseException`을 직접 상속하기 때문에, `except Exception`에 잡히지 않습니다. `ThreadPoolExecutor`가 이걸 캡처했다가 `future.result()` 호출 시 메인 스레드에서 재발생시키면서 프로그램이 통째로 종료되어 버렸습니다.
+기존에는 `except Exception`으로 에러를 잡고 있었는데, 여기에 함정이 있었습니다. 쓰레드 답글을 가져오는 내부 함수 `fetch_thread` 내부의 `sys.exit(1)`이 발생시키는 `SystemExit`은 Python에서 `BaseException`을 직접 상속하기 때문에, `except Exception`에 잡히지 않습니다. `ThreadPoolExecutor`가 이걸 캡처했다가 `future.result()` 호출 시 메인 스레드에서 재발생시키면서 프로그램이 통째로 종료되어 버렸습니다.
 
 `except BaseException`으로 변경하여 개별 쓰레드 실패 시 해당 쓰레드만 스킵하고 나머지는 계속 진행하도록 수정했습니다. 실패한 쓰레드는 stderr에 요약됩니다.
 
