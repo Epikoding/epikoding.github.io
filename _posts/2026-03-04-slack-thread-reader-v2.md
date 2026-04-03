@@ -140,7 +140,7 @@ scripts/slack-thread.sh CHANNEL_ID --from 2026-03-01 --to 2026-03-04
 
 #### [ 쓰레드 모드 ]
 
-쓰레드 링크를 넘기면 부모 메시지 포함 전체 답글을 가져옵니다. 쓰레드는 하나의 논의 단위이므로 `--limit`을 적용하지 않고, 페이지네이션으로 모든 답글을 빠짐없이 수집하는 구조입니다. 중간 답글이 빠지면 맥락이 끊기기 때문입니다.
+쓰레드 링크를 넘기면 부모 메시지 포함 전체 답글을 가져옵니다. 쓰레드는 하나의 논의 단위이므로 `--limit`을 적용하지 않고, 페이지네이션으로 모든 답글을 빠짐없이 수집하는 구조입니다. 중간 답글이 빠지면 맥락이 끊기기 때문입니다. 다만 답글이 수백 건을 넘는 대규모 쓰레드에서는 LLM 컨텍스트 윈도우를 초과할 수 있으므로, 이런 경우는 별도 처리가 필요합니다.
 
 ```bash
 scripts/slack-thread.sh https://workspace.slack.com/archives/CHANNEL/pTS
@@ -171,7 +171,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 
 모드 분기를 마치고 나서 신경 쓴 건 출력 형식이었습니다. 기존에는 내림차순(최신 먼저)이 기본이었는데, 오름차순(과거부터 최신)으로 바꿨습니다.
 
-질문 다음에 답변이 오고, 피드백 뒤에 수정본이 오는 순차적 흐름을 그대로 읽을 수 있어서, LLM이 대화 맥락을 파악하기에도 자연스럽습니다.
+질문 다음에 답변이 오고, 피드백 뒤에 수정본이 오는 순차적 흐름을 그대로 읽을 수 있어서, LLM이 대화 맥락을 파악하기에도 자연스럽습니다. 최근 메시지부터 보고 싶은 경우를 위해 `--desc` 옵션도 마련했습니다.
 
 #### [ 메시지 포맷 ]
 
@@ -205,7 +205,7 @@ scripts/slack-thread.sh "https://workspace.slack.com/archives/CHANNEL/pTS?thread
 📎스크린샷.png U07A1B2C3D4/F08E5F6G7H8
 ```
 
-`https://{workspace}.slack.com/files/` 접두사는 워크스페이스 내에서 고정값이므로 제거했고, URL 인코딩된 파일명도 `📎` 뒤에 이미 표시되니 중복 제거했습니다. `USER_ID/FILE_ID`만 있으면 전체 URL을 복원할 수 있기 때문에, 정보 손실 없이 축약이 가능합니다.
+`https://{workspace}.slack.com/files/` 접두사는 워크스페이스 내에서 고정값이므로 제거했고, URL 인코딩된 파일명도 `📎` 뒤에 이미 표시되니 중복 제거했습니다. `USER_ID/FILE_ID`만 있으면 전체 URL을 복원할 수 있기 때문에, 같은 워크스페이스 내에서는 정보 손실 없이 축약이 가능합니다.
 
 디자인 팀 채널처럼 스크린샷과 시안 파일이 대량으로 공유되는 곳에서는, 이 축약만으로도 눈에 띄는 차이가 생깁니다.
 
@@ -247,7 +247,7 @@ class SlackClient:
 
 기존에는 `except Exception`으로 에러를 잡고 있었는데, 여기에 함정이 있었습니다. 쓰레드 답글을 가져오는 내부 함수 `fetch_thread` 내부의 `sys.exit(1)`이 발생시키는 `SystemExit`은 Python에서 `BaseException`을 직접 상속하기 때문에, `except Exception`에 잡히지 않습니다. `ThreadPoolExecutor`가 이걸 캡처했다가 `future.result()` 호출 시 메인 스레드에서 재발생시키면서 프로그램이 통째로 종료되어 버렸습니다.
 
-`except BaseException`으로 변경하여 개별 쓰레드 실패 시 해당 쓰레드만 스킵하고 나머지는 계속 진행하도록 수정했습니다. 실패한 쓰레드는 stderr에 요약됩니다.
+`except BaseException`으로 변경하여 개별 쓰레드 실패 시 해당 쓰레드만 스킵하고 나머지는 계속 진행하도록 수정했습니다. `BaseException`은 `KeyboardInterrupt`도 포함하므로, 실제로는 `(SystemExit, Exception)` 튜플로 명시하는 편이 더 안전합니다. 실패한 쓰레드는 stderr에 요약됩니다.
 
 ```text
 [warn] 2/15 threads failed: 1770775935.866499, 1770776063.826049
