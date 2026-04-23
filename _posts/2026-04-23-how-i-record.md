@@ -178,7 +178,7 @@ AI가 초안을 내주기 시작하면서 생긴 새 문제가 있다. 초안을
 
 이 설계 뒤에는 **Generator-Evaluator 하네스**(생성과 검증 역할을 묶어 자동 루프로 돌리는 틀)라는 패턴이 있다. document 스킬은 그 패턴을 "Obsidian 노트 생성"이라는 특정 문제에 맞춰 구현한 사례다. 같은 패턴을 document-export 스킬까지 적용하며 Evaluator를 전문화하고 평가 축을 10개로 확장했고, Evaluator를 Codex(GPT-5.4)로 돌려 cross-model review까지 넘긴 과정은 [Claude Code 하네스 패턴 가이드 Part 1](https://epikoding.github.io/posts/claude-code-harness-pattern-guide-part1/)에 따로 써 두었다.
 
-가장 핵심은 **Generator와 Evaluator의 역할을 분리한다**는 점이다. 한 역할이 쓰기와 검증을 동시에 맡으면 자기 사각지대를 볼 수 없다. 그 위에 두 역할을 가능한 한 다른 모델에 맡긴다. 같은 모델은 같은 자리에서 같은 실수를 하기 쉽기 때문이다. 완전히 다른 사각지대를 보장할 수는 없지만 적어도 한쪽이 놓친 것을 다른 쪽이 잡을 여지가 생긴다. 단순히 두 번 돌리는 redundancy가 아니라 구조적으로 다른 관점을 섞는 장치에 가깝다. Structural Evaluator가 Claude여도 괜찮은 이유는 템플릿·디렉토리 배치가 내용이 아니라 형식의 문제라서다.
+핵심만 정리해서 말한다면 **Generator와 Evaluator의 역할을 분리한다**는 점이다. 한 역할이 쓰기와 검증을 동시에 맡으면 자기 사각지대를 볼 수 없다. 그 위에 두 역할을 가능한 한 다른 모델에 맡긴다. 같은 모델은 같은 자리에서 같은 실수를 하기 쉽기 때문이다. 완전히 다른 사각지대를 보장할 수는 없지만 적어도 한쪽이 놓친 것을 다른 쪽이 잡을 여지가 생기는 것이다. 
 
 ```mermaid
 flowchart LR
