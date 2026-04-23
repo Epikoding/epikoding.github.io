@@ -108,7 +108,7 @@ flowchart LR
 
 이 문제를 이미 풀어 둔 사람이 있었다. [ZeroSumQuant/claude-conversation-extractor](https://github.com/ZeroSumQuant/claude-conversation-extractor)는 `~/.claude/projects/*/chat_*.jsonl`에 잠들어 있는 세션들을 마크다운으로 뽑아내는 도구다. 다만 영어 UI였고, 한글 검색이 제대로 되지 않았으며, 저장할 때마다 경로를 다시 입력해야 했다. 모두 내 손에 어색하게 맞지 않는 부분이었기에, fork해서 v1.1.2-ko로 내 쪽에 맞게 고쳐 두었다.
 
-고친 지점은 셋이다. 사용자 대면 메시지를 전부 한국어화했다. 검증 가능성이라는 원칙의 연장선에 있는데 내가 읽을 수 있어야 검증할 수 있기 때문이다. 한글 실시간 검색을 위해 UTF-8 멀티바이트 키보드 핸들러를 붙였고, 최근 저장 경로 세 개를 `~/.claude/conversation-extractor-config.json`에 기억하게 했다.
+고친 지점은 셋이다. 사용자가 보는 메시지를 전부 한국어화했다. 검증 가능성이라는 원칙의 연장선에 있는데 내가 읽을 수 있어야 검증할 수 있기 때문이다. 한글 실시간 검색을 위해 UTF-8 멀티바이트 키보드 핸들러를 붙였고, 최근 저장 경로 세 개를 `~/.claude/conversation-extractor-config.json`에 기억하게 했다.
 
 쓰는 모습은 이런 식이다. `claude-start`로 인터랙티브 메뉴를 띄우고, 남기고 싶은 대화를 고르면 마크다운이 떨어진다. 그 마크다운이 다음 단계인 document 스킬의 입력이 된다.
 
