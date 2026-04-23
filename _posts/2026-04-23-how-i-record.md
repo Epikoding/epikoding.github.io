@@ -113,8 +113,32 @@ flowchart LR
 쓰는 모습은 이런 식이다. `claude-start`로 인터랙티브 메뉴를 띄우고, 남기고 싶은 대화를 고르면 마크다운이 떨어진다. 그 마크다운이 다음 단계인 document 스킬의 입력이 된다.
 
 ```bash
-claude-start
-# 인터랙티브 메뉴에서 대화 선택 → 마크다운으로 추출
+$ claude-start
+
+📁 대화를 어디에 저장하시겠습니까?
+  1. ~/Desktop/Claude Conversations
+  2. ~/Documents/Claude Conversations
+  3. ~/Downloads/Claude Conversations
+
+최근 사용한 위치:
+  5. ~/Obsidian/10. Fleeting Notes
+
+옵션을 선택하세요: 3
+
+🔍 대화를 검색하는 중...
+✅ 3332개의 대화를 찾았습니다!
+
+   1. [2026-04-23 13:45] project-A           (5082.6 KB)
+   2. [2026-04-23 13:36] project-A           (22358.5 KB)
+   3. [2026-04-23 12:29] project-B           (3908.4 KB)
+  ... 외 3329개
+
+선택: s
+대화 번호: 1
+
+📤 추출하는 중...
+✅ claude-conversation-2026-04-23-ca6372c1.md (125 messages)
+📁 저장: ~/Downloads/Claude Conversations
 ```
 
 - 저장소: [github.com/Epikoding/claude-conversation-extractor](https://github.com/Epikoding/claude-conversation-extractor)
