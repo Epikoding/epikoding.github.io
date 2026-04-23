@@ -59,6 +59,7 @@ flowchart LR
 그래서 단축키 두 개를 Karabiner에 묶어 두었다. `Cmd+Shift+C`는 Finder에서 선택한 항목의 POSIX 경로를 그대로 복사하고, `Cmd+Option+Shift+C`는 같은 경로를 공백과 괄호가 백슬래시로 이스케이프된 터미널 안전 형태로 복사한다. 선택된 것이 없으면 현재 창의 경로를 대신 가져온다.
 
 ```json
+[
 {
   "description": "Cmd+Shift+C to copy selected file path in Finder",
   "manipulators": [
@@ -91,6 +92,7 @@ flowchart LR
     }
   ]
 }
+]
 ```
 {: file="~/.config/karabiner/karabiner.json" }
 
