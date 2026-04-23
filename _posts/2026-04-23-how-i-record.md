@@ -58,43 +58,7 @@ flowchart LR
 
 그래서 단축키 두 개를 Karabiner에 묶어 두었다. `Cmd+Shift+C`는 Finder에서 선택한 항목의 경로를 그대로 복사하고, `Cmd+Option+Shift+C`는 같은 경로를 공백과 괄호가 백슬래시로 이스케이프된 터미널 안전 형태로 복사한다. 선택된 것이 없으면 현재 창의 경로를 대신 가져온다.
 
-```json
-[
-{
-  "description": "Cmd+Shift+C to copy selected file path in Finder",
-  "manipulators": [
-    {
-      "conditions": [
-        { "bundle_identifiers": ["^com\\.apple\\.finder$"], "type": "frontmost_application_if" }
-      ],
-      "from": {
-        "key_code": "c",
-        "modifiers": { "mandatory": ["command", "shift"] }
-      },
-      "to": [{ "shell_command": "osascript -e 'tell application \"Finder\"' -e 'set selectedItems to selection' -e 'if (count of selectedItems) > 0 then' -e 'set the clipboard to POSIX path of (item 1 of selectedItems as alias)' -e 'else' -e 'set the clipboard to POSIX path of (target of front window as alias)' -e 'end if' -e 'end tell'" }],
-      "type": "basic"
-    }
-  ]
-},
-{
-  "description": "Cmd+Option+Shift+C to copy quoted file path in Finder",
-  "manipulators": [
-    {
-      "conditions": [
-        { "bundle_identifiers": ["^com\\.apple\\.finder$"], "type": "frontmost_application_if" }
-      ],
-      "from": {
-        "key_code": "c",
-        "modifiers": { "mandatory": ["command", "option", "shift"] }
-      },
-      "to": [{ "shell_command": "export LC_ALL=en_US.UTF-8; osascript -e 'tell application \"Finder\"' -e 'set selectedItems to selection' -e 'if (count of selectedItems) > 0 then' -e 'POSIX path of (item 1 of selectedItems as alias)' -e 'else' -e 'POSIX path of (target of front window as alias)' -e 'end if' -e 'end tell' | tr -d '\\n' | perl -pe 's/([ ()])/\\\\$1/g' | pbcopy" }],
-      "type": "basic"
-    }
-  ]
-}
-]
-```
-{: file="~/.config/karabiner/karabiner.json" }
+전체 JSON 설정과 동작 원리는 [Finder에서 파일 경로를 바로 복사하는 Karabiner 단축키](https://epikoding.github.io/posts/karabiner-finder-path-copy/)에 정리해 두었다.
 
 사소해 보이는 개선이지만 체감은 의외로 크다. 사람이 도구의 동선에 맞추는 게 아니라 도구가 사람의 동선에 맞아야 한다고 생각하는데 이 한 키로 아낀 건 1초가 아니라 그 1초마다 흩어지던 주의력이다.
 
@@ -215,6 +179,8 @@ LLM이 같은 실수를 반복하는 지점을 따로 문서화해 두고, Gener
 - `directory-guide.md`: 디렉토리 배치 규칙
 - `vault-rules.md`: 볼트 전반의 컨벤션
 - `mermaid-gotchas.md`: 다이어그램 렌더링 함정
+
+`directory-guide.md`와 `vault-rules.md`가 가리키는 볼트 구조는 PARA를 조금 변형한 형태다. 이 구조 자체에 대한 이야기는 [Mac을 더 편리하게 사용하기 위한 유틸리티 모음 — Obsidian](https://epikoding.github.io/posts/Mac%EC%9D%84-%EB%8D%94-%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%9C%A0%ED%8B%B8%EB%A6%AC%ED%8B%B0-%EB%AA%A8%EC%9D%8C.md/#obsidian)에 정리해 두었다.
 
 자유도를 주기만 하면 LLM은 매번 비슷한 곳에서 넘어진다. 그래서 자유도 옆에 규칙을 같이 주입한다.
 

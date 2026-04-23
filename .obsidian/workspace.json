@@ -15,7 +15,7 @@
               "state": {
                 "file": "_posts/2026-04-23-how-i-record.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
               "title": "2026-04-23-how-i-record"
@@ -208,10 +208,14 @@
   },
   "active": "4d866b9645c796a9",
   "lastOpenFiles": [
-    "_posts/2026-03-27-claude-code-harness-pattern-guide-part1.md",
-    "_posts/2026-03-27-claude-code-harness-pattern-guide-part2.md",
+    "_posts/2026-02-19-karabiner-finder-path-copy.md",
+    "_posts/2026-02-16-slack-thread-reader-skill.md",
+    "_posts/2025-01-10-obsidian-sync-blog.md.md",
     "_posts/2026-04-23-how-i-record.md",
+    "_posts/2025-01-10-Mac을 더 편리하게 사용하기 위한 유틸리티 모음.md.md",
     "_posts/2026-04-15-nginx-xff-nat-forwarded-header-filter-debugging-retrospective.md",
+    "_posts/2026-03-27-claude-code-harness-pattern-guide-part2.md",
+    "_posts/2026-03-27-claude-code-harness-pattern-guide-part1.md",
     "_posts/2026-04-24-how-i-record.md",
     "_posts/2026-03-04-slack-thread-reader-v2.md",
     "_posts/2026-04-15-nginx-reverse-proxy-xff-nat-spring-forwarded-header-filter-guide.md",
@@ -229,16 +233,12 @@
     "docs/superpowers",
     "docs",
     "_posts/2026-03-27-claude-code-harness-pattern-part1-introduction.md",
-    "_posts/2026-02-19-karabiner-finder-path-copy.md",
     "_posts/2026-02-05-claude-skill-complete-guide.md",
     "_posts/2026-01-14-ssr-get-post-exception-handling.md",
     "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
-    "_posts/2025-01-10-obsidian-sync-blog.md.md",
-    "_posts/2025-01-10-Mac을 더 편리하게 사용하기 위한 유틸리티 모음.md.md",
     "posts/slack-thread-reader-skill 1.md",
     "posts/slack-thread-reader-skill.md",
     "_posts/2026-01-15-thymeleaf-modal-separation-limitations.md",
-    "_posts/2026-01-15-spring-validation-groups.md",
     "assets/js/custom/mermaid-theme.js",
     "assets/js/custom",
     "assets/js",
