@@ -43,14 +43,11 @@ flowchart LR
     qmd_gen["qmd<br/>(생성 시 맥락 조회)"]:::qmd
     note_skill["document 스킬<br/>(Generator + Cross-model 검증)"]:::note
     vault["Obsidian 볼트<br/>(builds on / relates to)"]:::src
-    qmd_ret["qmd<br/>(사후 재검색)"]:::qmd
 
     source --> karabiner --> note_skill
     source --> extractor --> note_skill
     qmd_gen -- "related docs" --> note_skill
     note_skill --> vault
-    vault -. "매일 재인덱싱" .-> qmd_ret
-    qmd_ret -. "재활용" .-> source
 ```
 
 아래는 흐름을 따라가는 순서로, 네 도구를 하나씩 들여다본다.
