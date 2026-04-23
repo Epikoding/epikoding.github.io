@@ -3,5 +3,6 @@
   "useMarkdownLinks": true,
   "attachmentFolderPath": "assets/img",
   "strictLineBreaks": false,
-  "showLineNumber": true
+  "showLineNumber": true,
+  "spellcheck": false
 }
