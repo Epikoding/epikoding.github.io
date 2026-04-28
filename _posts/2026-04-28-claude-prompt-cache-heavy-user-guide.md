@@ -63,27 +63,32 @@ Claude Code 같은 호스트 환경을 쓰고 있다면, 사용자가 따로 손
 
 매 턴마다 메시지가 누적되고, 그 누적된 앞부분이 다음 턴의 캐시가 됩니다. 정확한 흐름은 이렇습니다.
 
-```
-Turn 1: A 질문
-[system + tools + user(A)]
-                          ↑ 캐시 경계 (자동 캐싱이 여기 찍음)
-캐시 저장: system + tools + A 전체를 캐시에 저장
-모델이 A-1 답변 생성
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant API as Claude API
+    participant Cache as 캐시 보관함
+    participant M as Model
 
-Turn 2: B 질문 (A-1 응답이 추가된 상태)
-[system + tools + user(A) + assistant(A-1) + user(B)]
-                                                   ↑ 새 캐시 경계
-캐시 읽기: 처음부터 user(A)까지는 turn 1에서 저장된 캐시에서 (90% 절감)
-새로 처리: assistant(A-1) + user(B) 부분만
-캐시 저장: 이번 턴까지의 전체 앞부분을 다시 저장 (다음 턴 대비)
-모델이 B-1 답변 생성
+    Note over U,M: Turn 1: A 질문
+    U->>API: [system + tools + user(A)]
+    API->>Cache: 저장: system + tools + A 전체
+    API->>M: 처리 요청
+    M-->>U: A-1 답변
 
-Turn 3: C 질문
-[system + tools + user(A) + assistant(A-1) + user(B) + assistant(B-1) + user(C)]
-                                                                              ↑ 새 캐시 경계
-캐시 읽기: 처음부터 user(B)까지는 turn 2에서 저장된 캐시에서
-새로 처리: assistant(B-1) + user(C) 부분만
-캐시 저장: 이번 턴 전체를 다시 저장
+    Note over U,M: Turn 2: B 질문
+    U->>API: [... + assistant(A-1) + user(B)]
+    Cache-->>API: 읽기: user(A)까지 (90% 절감)
+    API->>M: 새로 처리: assistant(A-1) + user(B)
+    API->>Cache: 저장: 이번 턴까지 전체
+    M-->>U: B-1 답변
+
+    Note over U,M: Turn 3: C 질문
+    U->>API: [... + assistant(B-1) + user(C)]
+    Cache-->>API: 읽기: user(B)까지
+    API->>M: 새로 처리: assistant(B-1) + user(C)
+    API->>Cache: 저장: 이번 턴 전체
+    M-->>U: C-1 답변
 ```
 
 핵심은 **앞 턴까지 누적된 앞부분이 다음 턴의 캐시 키가 된다**는 점입니다. 한 세션에서 대화가 길어질수록 앞부분이 두텁게 캐시되고, 매 턴 새로 처리해야 하는 부분은 직전 답변과 새로운 한 마디뿐입니다. 멀티턴 대화가 캐싱 효과를 가장 크게 보는 이유가 여기 있습니다.
@@ -174,7 +179,7 @@ Claude의 캐시 보관 시간은 두 종류입니다. 기본값인 5분, 그리
 
 #### [ 1시간 TTL은 어떻게 켜는가 ]
 
-환경에 따라 기본값이 다릅니다. **Claude Max 플랜을 쓰는 유저라면 기본 TTL이 이미 1시간**으로 설정되어 있어 별도 작업 없이 1시간 캐시 효과를 받습니다.
+환경에 따라 기본값이 다릅니다. **Claude Max 플랜을 쓰는 유저라면 기본 TTL이 이미 1시간**으로 설정되어 있어 별도 작업 없이 1시간 캐시 효과를 받습니다. 공식 문서에 명시된 사항은 아니지만, Max 환경의 세션 JSONL 로그에서 1시간 TTL이 찍히는 동작을 직접 확인할 수 있습니다(2026-04-28 기준).
 
 일반 환경에서는 기본이 5분입니다. 1시간을 쓰고 싶다면 Claude Code의 환경변수에 다음 한 줄을 추가하면 됩니다.
 
