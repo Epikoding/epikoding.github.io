@@ -208,8 +208,9 @@
   },
   "active": "4d866b9645c796a9",
   "lastOpenFiles": [
-    "_posts/2026-04-23-how-i-record.md",
+    "_posts/2026-01-15-thymeleaf-modal-separation-limitations.md",
     "_posts/2026-04-28-claude-prompt-cache-heavy-user-guide.md",
+    "_posts/2026-04-23-how-i-record.md",
     "_posts/2026-03-27-claude-code-harness-pattern-guide-part2.md",
     "_posts/2026-03-27-claude-code-harness-pattern-guide-part1.md",
     "_posts/2026-04-15-nginx-xff-nat-forwarded-header-filter-debugging-retrospective.md",
@@ -238,7 +239,6 @@
     "_posts/2026-01-14-ssr-get-post-exception-handling.md",
     "_posts/2026-01-13-jpa-mybatis-schema-mismatch.md",
     "posts/slack-thread-reader-skill 1.md",
-    "posts/slack-thread-reader-skill.md",
     "assets/js/custom/mermaid-theme.js",
     "assets/js/custom",
     "assets/js",
