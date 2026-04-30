@@ -180,7 +180,7 @@ LLM이 같은 실수를 반복하는 지점을 따로 문서화해 두고, Gener
 - `vault-rules.md`: 볼트 전반의 컨벤션
 - `mermaid-gotchas.md`: 다이어그램 렌더링 함정
 
-`directory-guide.md`와 `vault-rules.md`가 가리키는 볼트 구조는 PARA를 조금 변형한 형태다. 이 구조 자체에 대한 이야기는 [Mac을 더 편리하게 사용하기 위한 유틸리티 모음 — Obsidian](https://epikoding.github.io/posts/Mac%EC%9D%84-%EB%8D%94-%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%9C%A0%ED%8B%B8%EB%A6%AC%ED%8B%B0-%EB%AA%A8%EC%9D%8C.md/#obsidian)에 정리해 두었다.
+`directory-guide.md`와 `vault-rules.md`가 가리키는 볼트 구조는 PARA를 조금 변형한 형태다. 이 구조 자체에 대한 이야기는 [Mac을 더 편리하게 사용하기 위한 유틸리티 모음 — Obsidian](https://epikoding.github.io/posts/Mac%EC%9D%84-%EB%8D%94-%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%9C%A0%ED%8B%B8%EB%A6%AC%ED%8B%B0-%EB%AA%A8%EC%9D%8C/#obsidian)에 정리해 두었다.
 
 자유도를 주기만 하면 LLM은 매번 비슷한 곳에서 넘어진다. 그래서 자유도 옆에 규칙을 같이 주입한다.
 

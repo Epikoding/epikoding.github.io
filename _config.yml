@@ -26,10 +26,10 @@ description: >- # used by seo meta and the atom feed
 url: 'https://epikoding.github.io'
 
 github:
-  username: epikoding # change to your GitHub username
+  username: Epikoding # change to your GitHub username
 
-twitter:
-  username: twitter_username # change to your Twitter username
+# twitter:
+#   username: twitter_username # change to your Twitter username
 
 social:
   # Change to your full name.
@@ -38,7 +38,7 @@ social:
   email: epikoding@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://github.com/epikoding # change to your GitHub homepage
+    - https://github.com/Epikoding # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
